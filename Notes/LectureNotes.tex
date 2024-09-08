@@ -27,6 +27,7 @@
 \usepackage{mathrsfs}
 \usepackage{afterpage}
 \usepackage[svgnames]{xcolor}
+
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
 
@@ -69,8 +70,61 @@
 \maketitle
 \tableofcontents
 
-\section*{Introduction}
+\section{Introduction}
+
+The mathematics of decision making is very closely tied to the field of
+mathematical optimization. One of the primary ways mathematics is used to help
+guide decisions is by maximizing (or minimizing) specific outcomes subject to a
+list of constraints. Mathematical optimization provides the formal tools to
+model and solve such problems.
+
+There are many kinds of mathematical optimization. There are two basic types
+depending on whether the variables to optimize or discrete or continuous. A few
+types of optimization are\footnote{``Program'' is not a computer program but
+comes from the United States military's use of the word for training and
+logistics schedules.}
+\begin{itemize}
+	\item Linear Programming,
+	\item Integer Programming,
+	\item Stochastic programming,
+	\item Combinatorial optimization,
+	\item Dynamic programming.
+\end{itemize}
+Unsurprisingly there are many real-world applications; to list a few we have
+network optimization, pricing strategy, scheduling, supervised machine learning
+training, supply chain optimization, and transportation problems. 
+
+In this module, we will introduce the fundamentals of \textbf{linear
+programming}, also called \emph{linear optimization} and \emph{operations
+research}, such as the simplex method, polyhedral geometry, and the notion of
+duality. Depending on the time, we may also delve into \textbf{integer
+programming}.
+
+\subsection{History}
+
+Mathematical optimization has quite an interesting history. In the 17th century,
+combinatorial optimization problems were solved using game theory,
+combinatorics, and ad hoc methods. In the 19th century, transportation problems
+involving post and rail were studied and solved. And in the 20th century with
+the two World Wars and rise of the assembly line, operations research took off
+developing the mathematics for all kinds of optimization problems. 
+
+One of the most influential figures in mathematical optimization, and linear
+programming in particular, is George Dantzig. He was the recipient of the
+President's National Medal of Science in 1975 \cite{NSF} and was credited for 
+\begin{quote}
+	\emph{inventing linear programming and discovering methods that led to wide-scale scientific and technical applications to important problems in logistics, scheduling, and network optimization, and to the use of computers in making efficient use of the mathematical theory.}
+\end{quote}
+The proof of the simplex method was classified and proved in 1960 by the
+Mathematics Division of the RAND Corporation~\cite{SimplexMethod}.
+
+\subsection{Five examples}
 
 
+
+\newpage
+
+\bibliography{bibliography} 
+\bibliographystyle{abbrv}
 
 \end{document}
