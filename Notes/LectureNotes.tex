@@ -27,6 +27,8 @@
 \usepackage{mathrsfs}
 \usepackage{afterpage}
 \usepackage[svgnames]{xcolor}
+\usepackage{marvosym}
+\usepackage[framemethod=TikZ]{mdframed}
 
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
@@ -48,6 +50,31 @@
 \newtheorem{quest}[thm]{Question}
 \newtheorem{obs}[thm]{Observation}
 
+\newenvironment{mybox}[1][]{%
+\ifstrempty{#1}%
+% if condition (without title)
+{\mdfsetup{%
+    frametitle={%
+        \tikz[baseline=(current bounding box.east),outer sep=0pt]
+        \node[anchor=east,rectangle,fill=RoyalBlue!80]}
+    }%
+% else condition (with title)
+}{\mdfsetup{%
+    frametitle={%
+        \tikz[baseline=(current bounding box.east),outer sep=0pt]
+        \node[anchor=east,rectangle,fill=RoyalBlue!80,text=white]
+        {\strut #1};}%
+    }%
+}%
+% Both conditions
+\mdfsetup{%
+    innertopmargin=10pt,linecolor=RoyalBlue!80,%
+    linewidth=2pt,topline=true,%
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax%
+}
+\begin{mdframed}[]\relax}{%
+\end{mdframed}}
+
 \renewcommand{\leq}{\leqslant}
 \renewcommand{\geq}{\geqslant}
 \newcommand{\N}{\mathbb{N}}
@@ -55,7 +82,7 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
-\newcommand{\define}[1]{\textit{#1}}
+\newcommand{\define}[1]{\textbf{\textit{#1}}}
 
 \setcounter{tocdepth}{2}
 
@@ -115,10 +142,122 @@ President's National Medal of Science in 1975 \cite{NSF} and was credited for
 \begin{quote}
 	\emph{inventing linear programming and discovering methods that led to wide-scale scientific and technical applications to important problems in logistics, scheduling, and network optimization, and to the use of computers in making efficient use of the mathematical theory.}
 \end{quote}
-The proof of the simplex method was classified and proved in 1960 by the
-Mathematics Division of the RAND Corporation~\cite{SimplexMethod}.
+The proof of the simplex method, name coined by Motskin, was developed by
+Dantzig in the late 1940s~\cite{Dantzig}. I find it interesting that the
+``inductive proof of the simplex method'' was published by the Mathematics
+Division of the RAND Corporation in 1960 (by Dantzig) and was made
+classified~\cite{SimplexMethod}. Now, of course, it is no longer classified.
+
+After explaining the Simplex Method to John von Neumann at the Institute of
+Advanced Study in Princeton during 1948, von Neumann immediately conjectured the
+notion of duality because of his recent foray into game theory. 
 
 \subsection{Five examples}
+
+We describe five example problems that touch on the tools we will develop in
+this module. For now, these problems are meant to introduce basic concepts and
+vocabulary.
+
+\subsubsection{A diet problem}
+
+Erin is planning her breakfast and wants to make oats with milk. (These
+numbers of simplified and not accurate to real life.)
+\begin{center}
+	\begin{tabular}{|r|c|c|} \hline
+		& Milk (100ml) & Oats (100g) \\ \hline 
+		fat & 2g & 3g \\ 
+		carbohydrates & 1g & 3g \\
+		protein & 4g & 3g \\ \hline
+	\end{tabular}
+\end{center}
+
+Erin wants the meal to provide at least 18g of fat, at least 12g of
+carbohydrates, and at least 24g of protein. If milk costs 20 cents per 100ml and
+oats 25 cents per 100g, what mixture minimizes the cost of the desired meal?
+
+
+\subsubsection{A transportation problem}
+
+Javier has two production sites: one in Sligo and another in Kilkenny. There are
+three distributing warehouses in Dublin, Galway, and Cork. The Sligo site can
+supply 120 products per week, whereas the site in Kilkenny can supply 140 per
+week. The warehouses in Dublin, Galway, and Cork need 100, 60, and 80 products
+per week respectively to meet demand. The shipping costs are giving in the
+following table.
+
+\begin{center}
+	\begin{tabular}{|c|ccc|} \hline 
+		& Dublin & Galway & Cork \\ \hline 
+		Sligo & 5 & 7 & 9 \\ 
+		Kilkenny & 6 & 7 & 10 \\ \hline
+	\end{tabular}
+\end{center}
+
+How many products should Javier ship from each production site to minimize total
+shipping costs while still meeting demand?
+
+
+\subsubsection{The travelling salesperson problem}
+
+Kofi need to deliver $n$ products in $n$ different cities starting in Paris. He
+wants to do this by visiting each city exactly one time and then returning back
+to Paris at the end. Which path minimizes the distance traveled? 
+
+This problem is perhaps the most famous combinatorial optimization problem and
+is the core problem of many other more complex problems.
+
+\subsubsection{A financial problem}
+
+Julia runs an investment and must invest exactly \EUR 100,000 in two types of
+securities: bond \textsf{A} paying a dividend of 7\% and stock \textsf{B} paying
+a dividend of 9\%. Due to her incredible experience, she knows that 
+\begin{itemize}
+	\item no more than \EUR 40,000 can be invested in stock \textsf{B} and
+	\item the amount invested in bond \textsf{A} must be at least twice that in
+	stock \textsf{B}.
+\end{itemize}
+How much should Julia invest in each security to maximize her return?
+
+
+\section{General linear programming}
+
+Linear programs are the basis of what we consider throughout this module. In the
+example problems above, we sometimes wanted to maximize and sometimes we wanted
+to minimize. Although these are technically different, we can treat them as the
+same. Suppose $f$ is some function we want to maximize. Then 
+\[ 
+	\max(f) = \min(-f).
+\] 
+So maximizing $f$ is the same as minimizing $-f$. Thus, we can use the two
+interchangeably---as long as we correctly compensate!
+
+\begin{mybox}[General linear program]
+	Determine values for $x_1,x_2,\dots, x_n$ that maximize 
+	\[
+		z = c_1 x_1 + c_2 x_2 + \cdots c_n x_n 
+	\]
+	subject to the constraints:
+	\begin{align*}
+		a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n ~&\square~ b_1, \\
+		a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n ~&\square~ b_2, \\
+		\vdots \qquad\quad \vdots \qquad\quad \vdots \qquad\quad \vdots \quad ~&\square~ \; \vdots \\
+		a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n ~&\square~ b_n,
+	\end{align*}
+	where each of the $\square$ can be replaced with one of $\{=,\leq,\geq\}$.
+\end{mybox}
+
+\begin{defn}
+	A \define{linear program (LP) problem} is a problem of the form above. The
+	function $z$ is called the \define{objective function}, and the $n$
+	(in-)equalities are called the \define{constraints}.
+\end{defn}
+
+A key feature of LPs is that the objective function as well as each of the
+constraint (in-)equalities are \emph{linear} in the $x_1,x_2,\dots, x_n$.
+
+
+
+
 
 
 
