@@ -55,8 +55,9 @@
 % if condition (without title)
 {\mdfsetup{%
     frametitle={%
-        \tikz[baseline=(current bounding box.east),outer sep=0pt]
-        \node[anchor=east,rectangle,fill=RoyalBlue!80]}
+        %\tikz[baseline=(current bounding box.east),outer sep=0pt]
+        %\node[anchor=east,rectangle,fill=RoyalBlue!80] {};
+		}
     }%
 % else condition (with title)
 }{\mdfsetup{%
@@ -74,6 +75,45 @@
 }
 \begin{mdframed}[]\relax}{%
 \end{mdframed}}
+
+\newenvironment{myboxgreen}[1][]{%
+\ifstrempty{#1}%
+% if condition (without title)
+{\mdfsetup{%
+    frametitle={%
+        %\tikz[baseline=(current bounding box.east),outer sep=0pt]
+        %\node[anchor=east,rectangle,fill=RoyalBlue!80] {};
+		}
+    }%
+% else condition (with title)
+}{\mdfsetup{%
+    frametitle={%
+        \tikz[baseline=(current bounding box.east),outer sep=0pt]
+        \node[anchor=east,rectangle,fill=ForestGreen!80,text=white]
+        {\strut #1};}%
+    }%
+}%
+% Both conditions
+\mdfsetup{%
+    innertopmargin=10pt,linecolor=ForestGreen!80,%
+    linewidth=2pt,topline=true,%
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax%
+}
+\begin{mdframed}[]\relax}{%
+\end{mdframed}}
+
+\newenvironment{myboxex}[1][1]{%
+\vspace{0.25em}
+\noindent \begin{minipage}{0.99\textwidth}
+	\centering
+	\begin{minipage}{#1\textwidth}
+		\begin{myboxgreen}[]{}
+}{%
+		\end{myboxgreen}
+	\end{minipage}
+\end{minipage}
+\vspace{0.25em}
+}
 
 \renewcommand{\leq}{\leqslant}
 \renewcommand{\geq}{\geqslant}
@@ -241,20 +281,139 @@ interchangeably---as long as we correctly compensate!
 		a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n ~&\square~ b_1, \\
 		a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n ~&\square~ b_2, \\
 		\vdots \qquad\quad \vdots \qquad\quad \vdots \qquad\quad \vdots \quad ~&\square~ \; \vdots \\
-		a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n ~&\square~ b_n,
+		a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n ~&\square~ b_m,
 	\end{align*}
 	where each of the $\square$ can be replaced with one of $\{=,\leq,\geq\}$.
 \end{mybox}
 
 \begin{defn}
 	A \define{linear program (LP) problem} is a problem of the form above. The
-	function $z$ is called the \define{objective function}, and the $n$
+	function $z$ is called the \define{objective function}, and the $m$
 	(in-)equalities are called the \define{constraints}.
 \end{defn}
 
 A key feature of LPs is that the objective function as well as each of the
 constraint (in-)equalities are \emph{linear} in the $x_1,x_2,\dots, x_n$.
 
+\subsection{Standard form}
+
+Can we play around with the constants $a_{ij}$ and $b_k$ to get all of the
+(in-)equalities into the same ``shape''? For example, 
+\[ 
+	4x_1 - 5x_2 - x3 \geq 1
+\] 
+is equivalent to 
+\[ 
+	-4x_1 + 5x_2 + x3 \leq -1.
+\] 
+Thus, if we have an inequality, we can force it to use just $\leq$. Moreover, if
+we have an equality, we can use two inequalities to obtain the same solutions:
+\[
+	4x_1 - 5x_2 - x3 = 1 \qquad \text{is equivalent to} \qquad \begin{cases}
+		4x_1 - 5x_2 - x3 \geq 1 ~\text{and} \\
+		4x_1 - 5x_2 - x3 \leq 1
+	\end{cases}
+\]
+So we can transform equalities to inequalities, but what about the other way
+around? We will look at this soon.
+
+In some examples, variables only took on non-negative values. This actually has
+an advantage of constraining the possible values of the variables, and it is
+something we will come back to later on. But what about situations were
+variables are allowed to have negative values? Suppose $x_i$ can be negative. We
+can introduce two new variables, say, $x_i^+$ and $x_i^-$, and we can rewrite
+$x_i$ as follows:
+\[ 
+	x_i = x_i^+  - x_i^-.
+\] 
+In this way, $x_i$ can be negative while both $x_i^+$ and $x_i^-$ are
+non-negative. Thus, we can replace all instances of $x_i$ with $x_i^+  - x_i^-$,
+so that all variables take non-negative values. 
+
+Now we can define the standard form for an LP. 
+
+\begin{mybox}[Linear program standard form]
+	Determine values for $x_1,x_2,\dots, x_n$ that maximize 
+	\[
+		z = c_1 x_1 + c_2 x_2 + \cdots c_n x_n 
+	\]
+	subject to the constraints: for all $i \in \{1,\dots, n\}$, $x_i\geq 0$ and
+	\begin{align*}
+		a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &\leq b_1, \\
+		a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &\leq b_2, \\
+		\vdots \qquad\quad \vdots \qquad\quad \vdots \qquad\quad \vdots \quad ~&\quad~ \; \vdots \\
+		a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n &\leq b_m.
+	\end{align*}
+\end{mybox}
+
+\begin{ex}
+	The following LP is not in standard form.
+
+	\begin{myboxex}[0.65]
+		Determine values for $x$ and $y$ that minimize 
+		\[ 
+			z = 3x + 2y
+		\]
+		subject to the constraints: $x\geq 0$, $y\geq 0$, and 
+		\begin{align*}
+			2x + y &\leq 4 \\ 
+			3x - 2y &\leq 6. 
+		\end{align*}
+	\end{myboxex}
+
+	\noindent We can put it into standard form as follows.
+
+	\begin{myboxex}[0.65]
+		Determine values for $x$ and $y$ that maximize 
+		\[ 
+			z = -3x - 2y
+		\]
+		subject to the constraints: $x\geq 0$, $y\geq 0$, and 
+		\begin{align*}
+			2x + y &\leq 4 \\ 
+			3x - 2y &\leq 6. 
+		\end{align*}
+	\end{myboxex}
+\end{ex}
+
+\begin{ex}
+	Put the following LP into standard form.
+
+	\begin{myboxex}[0.65]
+		Determine values for $x$ and $y$ that minimize 
+		\begin{align*}
+			z &= -4x + y
+		\end{align*}
+		subject to the constraints:
+		\begin{align*}
+			x - 3y &= 2, \\ 
+			x + y &\leq 6.
+		\end{align*}
+	\end{myboxex}
+\end{ex}
+
+\subsection{Canonical form}
+
+The canonical form is slightly different to that of the standard form of an LP.
+
+\begin{mybox}[Linear program canonical form]
+	Determine values for $x_1,x_2,\dots, x_s$ that maximize 
+	\[
+		z = c_1 x_1 + c_2 x_2 + \cdots c_n x_s 
+	\]
+	subject to the constraints: for all $i \in \{1,\dots, s\}$, $x_i\geq 0$ and
+	\begin{align*}
+		a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_s &= b_1, \\
+		a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_s &= b_2, \\
+		\vdots \qquad\quad \vdots \qquad\quad \vdots \qquad\quad \vdots \quad ~&\quad~ \; \vdots \\
+		a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_s &= b_m.
+	\end{align*}
+\end{mybox}
+
+\begin{prop}
+	Every LP in standard form can be brought into canonical form. In other
+	words, every LP has an associated LP in canonical form.
+\end{prop}
 
 
 
