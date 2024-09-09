@@ -21,6 +21,8 @@
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{graphicx}
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
 
 \begin{document}
 \pagestyle{empty}
@@ -70,6 +72,13 @@ Semester 1 (2024)
     Each of the three components is worth the same, so each part is one third of
     the final mark. The details of these components are not yet set and will be
     announced once they are known.
+    \vspace{1cm}
+    \item[Reading list:] We will follow \cite{MR1340426} closely, but you might
+    want other perspectives as well. Here is a more comprehensive list (some are
+    available through the library and others can be found online):
+    \nocite{*}
+    \bibliography{readings}
+    \bibliographystyle{plain}
 \end{description}
 
 
