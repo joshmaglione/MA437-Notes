@@ -49,6 +49,7 @@
 \newtheorem{ex}[thm]{Example}
 \newtheorem{quest}[thm]{Question}
 \newtheorem{obs}[thm]{Observation}
+\newtheorem{notation}[thm]{Notation}
 
 \newenvironment{mybox}[1][]{%
 \ifstrempty{#1}%
@@ -332,6 +333,21 @@ a dividend of 9\%. Due to her incredible experience, she knows that
 \end{itemize}
 How much should Julia invest in each security to maximize her return?
 
+See if you can get the following set up.
+
+\begin{myboxex}[0.75]
+	Maximize
+	\begin{align*}
+		z &= 0.07A + 0.09B
+	\end{align*}
+	subject to the constraints: $A\geq 0$, $B\geq 0$, and 
+	\begin{align*}
+		A + B &= 100000, \\
+		B &\leq 40000, \\
+		A &\geq 2B.
+	\end{align*}
+\end{myboxex}
+
 
 \section{General linear programming}
 
@@ -488,6 +504,164 @@ The canonical form is slightly different to that of the standard form of an LP.
 	Every LP in standard form can be brought into canonical form. In other
 	words, every LP has an associated LP in canonical form.
 \end{prop}
+
+\begin{proof}
+	Since we have already convinced ourselves that every LP can be brought into
+	standard form, it suffices to show that we can convert every LP in standard
+	form into canonical form. 
+	
+	The only difference between the two forms are in
+	the constraints; namely, we need to convert an inequality of the form 
+	\begin{align}\label{eqn:ineq}
+		a_1x_1 + \cdots + a_nx_n &\leq b
+	\end{align}
+	to an equality. To accomplish this, we introduce \emph{slack}
+	variables---these are just variables with a pretentious title. They simply
+	exist to ``pick up the slack''. The ``slack'' is just the difference of the
+	right hand side and the left hand side of~\eqref{eqn:ineq}. 
+
+	Let $s$ be a (slack) variable. Then~\eqref{eqn:ineq} is equivalent to 
+	\begin{align*}
+		s &\geq 0, \\ 
+		a_1x_1 + \cdots + a_nx_n + s &= b.
+	\end{align*}
+	Hence, we can introduce a new variable for each inequality and obtain an LP
+	in canonical form.
+\end{proof}
+
+\begin{ex}\label{ex:sewing}
+	A tailor is producing jumpers and trousers. They first need to cut the
+	fabric and then sew it together. It takes 2 hours to cut the fabric for
+	either a pair of trousers or a jumper. It takes 5 hours to sew a pair of
+	trousers and 3 hours for a jumper. Scissors can be used for 8 hours per day,
+	wheres the sewing machine can be used for 15 hours per day. If a pair of
+	trousers is sold for \EUR 120 and a jumper for \EUR 100, how many of each
+	should be made to maximize revenue? (Let's ignore demand.)
+
+	Write an LP in canonical form for this scenario.
+
+	\begin{myboxex}[0.65]
+		Maximize
+		\begin{align*}
+			z &= 100J + 120T,
+		\end{align*}
+		subject to $J,T,s_1,s_2\geq 0$ and
+		\begin{align*}
+			2J + 2T + s_1 &= 8,\\
+			3J + 5T + s_2 &= 15.
+		\end{align*}
+	\end{myboxex}
+\end{ex}
+
+\subsection{Matrix notation}
+
+Instead of writing out all of the constraints and all the terms of the objective
+function, we can compactly describe the same data using matrices. Define 
+\begin{align*}
+	A &= \begin{bmatrix}
+		a_{11} & a_{12} & \cdots & a_{1n} \\
+		a_{21} & a_{22} & \cdots & a_{2n} \\
+		\vdots & \vdots & \ddots & \vdots \\
+		a_{m1} & a_{m2} & \cdots & a_{mn}
+	\end{bmatrix}, & 
+	x &= \begin{bmatrix}
+		x_1 \\ x_2 \\ \vdots \\ x_n
+	\end{bmatrix}, & 
+	b &= \begin{bmatrix}
+		b_1 \\ b_2 \\ \vdots \\ b_m 
+	\end{bmatrix},  &
+	c &= \begin{bmatrix}
+		c_1 \\ c_2 \\ \vdots \\ c_n
+	\end{bmatrix}. 
+\end{align*}
+
+We use the relations $\leq$ and $\geq$ like we do with $=$ when applied to vectors, that is, they are determined coordinate wise. For example 
+\begin{align*}
+	\begin{bmatrix}
+		1 \\ 4
+	\end{bmatrix} &\leq 
+	\begin{bmatrix}
+		2 \\ 5
+	\end{bmatrix}, & 
+	\begin{bmatrix}
+		2 \\ 3 
+	\end{bmatrix} \not\leq 
+	\begin{bmatrix}
+		5 \\ 1 
+	\end{bmatrix}.
+\end{align*}
+In symbols, $x\leq y$ if and only if $x_i\leq y_i$ for all $i$.
+
+\begin{mybox}[LP standard form (matrices)]
+	Maximize 
+	\[
+		z = c^{\top}x 
+	\]
+	subject to $x\geq 0$ and 
+	\begin{align*}
+		Ax &\leq b.
+	\end{align*}
+\end{mybox}
+
+\begin{notation}
+	The letter $n$ is the number of variables in the objective function, and $m$
+	is the number of inequalities separate from $x\geq 0$.
+\end{notation}
+
+If it is not already clear how to convert all the previous example above into
+the matrix form, try to work this out yourself.
+
+\begin{defn}
+	A vector $x\in \mathbb{R}^n$ satisfying all the constraints of an LP (in
+	standard form) is a \define{feasible solution}.
+\end{defn}
+
+\begin{ex}
+	Recall \Cref{ex:sewing} the ``sewing problem''. The following vectors are
+	all feasible solutions:
+	\begin{align*}
+		\begin{bmatrix}
+			0 \\ 0 
+		\end{bmatrix}, \begin{bmatrix}
+			4 \\ 0 
+		\end{bmatrix}, \begin{bmatrix}
+			0 \\ \pi
+		\end{bmatrix}, \begin{bmatrix}
+			1 \\ 2 
+		\end{bmatrix}.
+	\end{align*}
+	The following vectors are not feasible solutions:
+	\begin{align*}
+		\begin{bmatrix}
+			-1 \\ 0 
+		\end{bmatrix}, \begin{bmatrix}
+			5 \\ 0 
+		\end{bmatrix}, \begin{bmatrix}
+			0 \\ 4
+		\end{bmatrix}, \begin{bmatrix}
+			2 \\ 2 
+		\end{bmatrix}.
+	\end{align*}
+\end{ex}
+
+\begin{defn}
+	A feasible solution that maximizes the objective function of an LP is an
+	\define{optimal solution}.
+\end{defn}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
