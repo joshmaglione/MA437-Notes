@@ -215,6 +215,43 @@ Erin wants the meal to provide at least 18g of fat, at least 12g of
 carbohydrates, and at least 24g of protein. If milk costs 20 cents per 100ml and
 oats 25 cents per 100g, what mixture minimizes the cost of the desired meal?
 
+We could express this more mathematically. For example, let $x$ and $y$ be
+variables such that $x = 1$ means 100ml of milk and $y=1$ means 100g of oats.
+Calculating the grams of fat relative to $x$ and $y$ is 
+\[
+	2x + 3y.
+\]
+For carbohydrates it is $x + 3y$, and for protein it is $4x+3y$. Because we want
+\emph{at least} 18g of fat, we express this via 
+\[ 
+	2x + 3y \geq 18.
+\] 
+We can set up similar inequalities for the other two:
+\begin{align*}
+	2x + 3y &\geq 18, \\
+	x + 3y &\geq 12, \\
+	4x + 3y &\geq 24.
+\end{align*}
+Since we cannot have negative amounts of milk or oats, we have $x\geq 0$ and
+$y\geq 0$. Since we want to minimize costs, we want to minimize 
+\begin{align*}
+	C &= 0.2 x + 0.25 y.
+\end{align*}
+Putting all of this together, we have the following optimization problem.
+
+\begin{myboxex}[0.75]
+	Determine values for $x$ and $y$ that minimize 
+	\begin{align*}
+		C &= 0.2 x + 0.25 y
+	\end{align*}
+	subject to the constraints: $x\geq 0$, $y\geq 0$, and 
+	\begin{align*}
+		2x + 3y &\geq 18, \\
+		x + 3y &\geq 12, \\
+		4x + 3y &\geq 24.
+	\end{align*}
+\end{myboxex}
+
 
 \subsubsection{A transportation problem}
 
@@ -236,6 +273,41 @@ following table.
 How many products should Javier ship from each production site to minimize total
 shipping costs while still meeting demand?
 
+We need many variables, so let's define a variable for each shipment---for example, from Kilkenny to Dublin. Write them as 
+\[
+	x_{kd}, x_{kg}, x_{kc}, x_{sd}, x_{sg}, x_{sc}. 
+\]
+Since Kilkenny and Sligo can only produce 140 and 120 products, respectively, we have
+\begin{align*}
+	x_{kd} + x_{kg} + x_{kc} &\leq 140, \\
+	x_{sd} + x_{sg} + x_{sc} &\leq 120.
+\end{align*}
+We need to meet demands, so we have 
+\begin{align*}
+	x_{kd} + x_{sd} &\geq 100, \\
+	x_{kg} + x_{sg} &\geq 60, \\
+	x_{kc} + x_{sc} &\geq 80. 
+\end{align*}
+Lastly, we want to minimize cost, so we want to minimize
+\begin{align*}
+	C &= 6x_{kd} + 7x_{kg} + 10x_{kc} + 5x_{sd} + 7x_{sg} + 9x_{sc}.
+\end{align*}
+Altogether we have the following linear program.
+
+\begin{myboxex}[0.75]
+	Minimize 
+	\begin{align*}
+		C &= 6x_{kd} + 7x_{kg} + 10x_{kc} + 5x_{sd} + 7x_{sg} + 9x_{sc}
+	\end{align*}
+	subject to the constraints: $x_{ij}\geq 0$ for all $i$ and $j$ and 
+	\begin{align*}
+		x_{kd} + x_{kg} + x_{kc} &\leq 140, \\
+		x_{sd} + x_{sg} + x_{sc} &\leq 120, \\
+		x_{kd} + x_{sd} &\geq 100, \\
+		x_{kg} + x_{sg} &\geq 60, \\
+		x_{kc} + x_{sc} &\geq 80.  
+	\end{align*}
+\end{myboxex}
 
 \subsubsection{The travelling salesperson problem}
 
@@ -244,7 +316,9 @@ wants to do this by visiting each city exactly one time and then returning back
 to Paris at the end. Which path minimizes the distance traveled? 
 
 This problem is perhaps the most famous combinatorial optimization problem and
-is the core problem of many other more complex problems.
+is the core problem of many other more complex problems. We will not do much
+more with this, but note that different ``distance functions'' can allow for all
+kinds of slow-downs and speed-ups.
 
 \subsubsection{A financial problem}
 
@@ -414,7 +488,6 @@ The canonical form is slightly different to that of the standard form of an LP.
 	Every LP in standard form can be brought into canonical form. In other
 	words, every LP has an associated LP in canonical form.
 \end{prop}
-
 
 
 
