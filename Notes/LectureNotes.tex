@@ -390,18 +390,18 @@ constraint (in-)equalities are \emph{linear} in the $x_1,x_2,\dots, x_n$.
 Can we play around with the constants $a_{ij}$ and $b_k$ to get all of the
 (in-)equalities into the same ``shape''? For example, 
 \[ 
-	4x_1 - 5x_2 - x3 \geq 1
+	4x_1 - 5x_2 - x_3 \geq 1
 \] 
 is equivalent to 
 \[ 
-	-4x_1 + 5x_2 + x3 \leq -1.
+	-4x_1 + 5x_2 + x_3 \leq -1.
 \] 
 Thus, if we have an inequality, we can force it to use just $\leq$. Moreover, if
 we have an equality, we can use two inequalities to obtain the same solutions:
 \[
-	4x_1 - 5x_2 - x3 = 1 \qquad \text{is equivalent to} \qquad \begin{cases}
-		4x_1 - 5x_2 - x3 \geq 1 ~\text{and} \\
-		4x_1 - 5x_2 - x3 \leq 1
+	4x_1 - 5x_2 - x_3 = 1 \qquad \text{is equivalent to} \qquad \begin{cases}
+		4x_1 - 5x_2 - x_3 \geq 1 ~\text{and} \\
+		4x_1 - 5x_2 - x_3 \leq 1
 	\end{cases}
 \]
 So we can transform equalities to inequalities, but what about the other way
