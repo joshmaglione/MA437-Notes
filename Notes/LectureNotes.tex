@@ -356,7 +356,7 @@ example problems above, we sometimes wanted to maximize and sometimes we wanted
 to minimize. Although these are technically different, we can treat them as the
 same. Suppose $f$ is some function we want to maximize. Then 
 \[ 
-	\max(f) = \min(-f).
+	\max(f) = -\min(-f).
 \] 
 So maximizing $f$ is the same as minimizing $-f$. Thus, we can use the two
 interchangeably---as long as we correctly compensate!
@@ -489,14 +489,14 @@ The canonical form is slightly different to that of the standard form of an LP.
 \begin{mybox}[Linear program canonical form]
 	Determine values for $x_1,x_2,\dots, x_s$ that maximize 
 	\[
-		z = c_1 x_1 + c_2 x_2 + \cdots c_n x_s 
+		z = c_1 x_1 + c_2 x_2 + \cdots c_s x_s 
 	\]
 	subject to the constraints: for all $i \in \{1,\dots, s\}$, $x_i\geq 0$ and
 	\begin{align*}
-		a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_s &= b_1, \\
-		a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_s &= b_2, \\
+		a_{11}x_1 + a_{12}x_2 + \cdots + a_{1s}x_s &= b_1, \\
+		a_{21}x_1 + a_{22}x_2 + \cdots + a_{2s}x_s &= b_2, \\
 		\vdots \qquad\quad \vdots \qquad\quad \vdots \qquad\quad \vdots \quad ~&\quad~ \; \vdots \\
-		a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_s &= b_m.
+		a_{r1}x_1 + a_{r2}x_2 + \cdots + a_{rs}x_s &= b_r.
 	\end{align*}
 \end{mybox}
 
