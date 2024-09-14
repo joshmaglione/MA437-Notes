@@ -50,6 +50,7 @@
 \newtheorem{quest}[thm]{Question}
 \newtheorem{obs}[thm]{Observation}
 \newtheorem{notation}[thm]{Notation}
+\newtheorem{exercise}{Exercise}
 
 \newenvironment{mybox}[1][]{%
 \ifstrempty{#1}%
@@ -124,6 +125,16 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\define}[1]{\textbf{\textit{#1}}}
+\newcommand{\WEEK}[1]{%
+\hfill Week #1
+
+\vspace{-1em}
+
+\begin{center}
+	\rule{\textwidth}{2pt}
+\end{center}
+\vspace{0.5em}%
+}
 
 \setcounter{tocdepth}{2}
 
@@ -505,6 +516,8 @@ The canonical form is slightly different to that of the standard form of an LP.
 	words, every LP has an associated LP in canonical form.
 \end{prop}
 
+\WEEK{1}
+
 \begin{proof}
 	Since we have already convinced ourselves that every LP can be brought into
 	standard form, it suffices to show that we can convert every LP in standard
@@ -593,7 +606,8 @@ We use the relations $\leq$ and $\geq$ like we do with $=$ when applied to vecto
 In symbols, $x\leq y$ if and only if $x_i\leq y_i$ for all $i$.
 
 \begin{mybox}[LP standard form (matrices)]
-	Maximize 
+	For $A\in\mathrm{Mat}_{m\times n}(\R)$, $b\in\R^m$, and $c\in \R^n$,
+	maximize 
 	\[
 		z = c^{\top}x 
 	\]
@@ -649,11 +663,62 @@ the matrix form, try to work this out yourself.
 	\define{optimal solution}.
 \end{defn}
 
+Now we describe the corresponding matrix form for the canonical form of an LP.
+It is built \emph{from} the standard form of an LP. We write
+$I_n\in\mathrm{Mat}_{n}(\R)$ for the identity matrix. For matrices $A,B\in
+\mathrm{Mat}_{m\times n}(\R)$, we set 
+\begin{align*}
+	\begin{bmatrix}
+		A ~|~ B 
+	\end{bmatrix} &= \begin{bmatrix}
+		a_{11} & \cdots & a_{1n} & b_{11} & \cdots & b_{1n} \\ 
+		\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+		a_{m1} & \cdots & a_{mn} & b_{m1} & \cdots & b_{mn}
+	\end{bmatrix} \in \mathrm{Mat}_{m \times 2n}(\R).
+\end{align*}
 
+\begin{mybox}[LP canonical form (matrices)]
+	For $A\in\mathrm{Mat}_{m\times n}(\R)$, $b\in\R^m$, and $c\in \R^{m+n}$,
+	maximize 
+	\begin{align*}
+		z &= c^{\top}x,
+	\end{align*}
+	subject to $x\geq 0$ and 
+	\begin{align*}
+		Ax &= b,
+	\end{align*}
+	where $c^{\top} = (c_1,\dots, c_n, 0, \dots, 0)$.
+\end{mybox}
 
+\begin{exercise}
+	Show that a feasible solution for an LP in standard form induces a feasible
+	solution in canonical form. Is the converse true?
+\end{exercise}
 
+\subsection{Geometry of the feasibly set}
 
+Now we begin our analysis of the set of feasible solutions to an LP. We begin by looking at the geometry.
 
+\begin{ex}
+	Let's consider the standard form of the LP in \Cref{ex:sewing}. In
+	particular, the feasible solutions are constrained by $J,T \geq 0$ and 
+	\begin{align*}
+		2J + 2T &\leq 8, \\
+		3J + 5T &\leq 15.
+	\end{align*}
+	We can plot the region in $\R^2$ as follows:
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[->] (-0.25,0) -- (6,0) node[right] {$J$};
+    		\draw[->] (0,-0.25) -- (0,5) node[above] {$T$};
+			\draw (-0.25,4.25) -- (4.25,-0.25);
+			\draw (-0.25,3.15) -- (5.416,-0.25);
+			\draw[ultra thick, fill=RoyalBlue] (0,0) -- (4,0) -- (2.5,1.5) -- (0,3) -- (0,0);
+			\node at (1.5, 3.75) {{\footnotesize $J + T = 4$}};
+			\node at (5, 1) {{\footnotesize $3J + 5T = 15$}};
+		\end{tikzpicture}
+	\end{center}
+\end{ex}
 
 
 
