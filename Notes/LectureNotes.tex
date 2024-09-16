@@ -734,30 +734,50 @@ This can be compactly written as $a^{\top}x \leq b_i$ for $a\in\R^n$ and $b_i\in
 \end{align*}
 defines a \define{hyperplane} in $\R^n$: the vector $a$ describes the ``slope''
 and the scalar $b_i$ describes how far the hyperplanes shifts away from the
-origin.
+origin. The hyperplane $a^{\top}x = b_i$ is the boundary of the set of solutions
+to $a^{\top}x \leq b_i$. In $\R^2$, hyperplanes are lines, and in $\R^3$ they
+are planes. 
+
 \begin{figure}[h]
 	\centering 
-	\begin{subfigure}[b]{0.45\textwidth}
-		\centering
-		\begin{tikzpicture}
-			\draw[->] (-2,0) -- (2,0) node[right] {$x_1$};
-			\draw[->] (0,-2) -- (0,2) node[above] {$x_2$};
-			\draw[<->, ultra thick, Crimson] (-1.9,-0.45) -- (1.9,1.45);
-			\draw[<->, thick, RoyalBlue, dashed] (-1.9, -0.95) -- (1.9, 0.95);
-		\end{tikzpicture}
-		\caption{$a = (-1, 2)$, $b=1$.}
-	\end{subfigure}%
-	\begin{subfigure}[b]{0.45\textwidth}
-		\centering
-
-		\caption{$a = (1, -1, -1)$, $b=1$.}
-	\end{subfigure}
+	\begin{tikzpicture}
+		\draw[->] (-2,0) -- (2,0) node[right] {$x_1$};
+		\draw[->] (0,-2) -- (0,2) node[above] {$x_2$};
+		\draw[<->, ultra thick, Crimson] (-1.9,-0.45) -- (1.9,1.45);
+		\draw[<->, thick, RoyalBlue, dashed] (-1.9, -0.95) -- (1.9, 0.95);
+	\end{tikzpicture}
+	\caption{The line given by $a = (-1, 2)$, $b=1$ in red, and the line with $a = (-1, 2)$, $b=0$ is in blue.}
 \end{figure}
 
+Hyperplanes $H$ in $\R^n$ partition $\R^n$ into three sets: the points ``below''
+$H$, the points ``above'' $H$, and the points on $H$. The set of points below
+$H$ define a \define{half-space}, and similarly for the set of points above $H$. More precisely, if 
+\begin{align*}
+	H &= \{x\in \R^n \mid a^{\top}x = b\},
+\end{align*}
+then both 
+\begin{align*}
+	H^+ &= \{x\in \R^n \mid a^{\top}x > b \}, \\
+	H^- &= \{x\in \R^n \mid a^{\top}x < b \}
+\end{align*}
+are half-spaces of $\R^n$. The \define{closed half-spaces} are 
+\begin{align*}
+	\overline{H^+} &= \{x\in \R^n \mid a^{\top}x \geq b \} = H^+ \cup H, \\
+	\overline{H^-} &= \{x\in \R^n \mid a^{\top}x \leq b \} = H^- \cup H.
+\end{align*}
 
+\begin{ex}
+	The sets 
+	\begin{align*}
+		X &= \{x\in \R^4 \mid -x_1 -4x_2 + \sin(1)x_3 \leq \pi \} \\
+		Y &= \{y\in \R^4 \mid 7y_1 + 7y_2 + 7y_3 + 7y_4 = 2\}, \\
+		Z &= \{z\in\R^4 \mid -8z_1 + 4z_2 - 2z_3 + z_4 > 0\}
+	\end{align*}
+	respectively define a closed half-space, hyperplane, and half-space in
+	$\R^4$.
+\end{ex}
 
-
-
+What does this have to do with LPs?
 
 
 
