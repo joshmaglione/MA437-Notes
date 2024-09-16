@@ -29,6 +29,8 @@
 \usepackage[svgnames]{xcolor}
 \usepackage{marvosym}
 \usepackage[framemethod=TikZ]{mdframed}
+\usepackage{pgfplots}
+\usetikzlibrary{3d}
 
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
@@ -697,7 +699,8 @@ $I_n\in\mathrm{Mat}_{n}(\R)$ for the identity matrix. For matrices $A,B\in
 
 \subsection{Geometry of the feasibly set}
 
-Now we begin our analysis of the set of feasible solutions to an LP. We begin by looking at the geometry.
+Now we begin our analysis of the set of feasible solutions to an LP. We begin by
+looking at the features of its geometry.
 
 \begin{ex}
 	Let's consider the standard form of the LP in \Cref{ex:sewing}. In
@@ -713,13 +716,43 @@ Now we begin our analysis of the set of feasible solutions to an LP. We begin by
     		\draw[->] (0,-0.25) -- (0,5) node[above] {$T$};
 			\draw (-0.25,4.25) -- (4.25,-0.25);
 			\draw (-0.25,3.15) -- (5.416,-0.25);
-			\draw[ultra thick, fill=RoyalBlue] (0,0) -- (4,0) -- (2.5,1.5) -- (0,3) -- (0,0);
+			\draw[ultra thick, fill=Crimson] (0,0) -- (4,0) -- (2.5,1.5) -- (0,3) -- (0,0);
 			\node at (1.5, 3.75) {{\footnotesize $J + T = 4$}};
 			\node at (5, 1) {{\footnotesize $3J + 5T = 15$}};
 		\end{tikzpicture}
 	\end{center}
 \end{ex}
 
+Let's consider one of our constraint inequalities:
+\begin{align*}
+	a_{i1}x_1 + \cdots + a_{in}x_n \leq b_i.
+\end{align*}
+This can be compactly written as $a^{\top}x \leq b_i$ for $a\in\R^n$ and $b_i\in
+\R$. The \emph{equation} 
+\begin{align*}
+	a^{\top}x = b_i 
+\end{align*}
+defines a \define{hyperplane} in $\R^n$: the vector $a$ describes the ``slope''
+and the scalar $b_i$ describes how far the hyperplanes shifts away from the
+origin.
+\begin{figure}[h]
+	\centering 
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\begin{tikzpicture}
+			\draw[->] (-2,0) -- (2,0) node[right] {$x_1$};
+			\draw[->] (0,-2) -- (0,2) node[above] {$x_2$};
+			\draw[<->, ultra thick, Crimson] (-1.9,-0.45) -- (1.9,1.45);
+			\draw[<->, thick, RoyalBlue, dashed] (-1.9, -0.95) -- (1.9, 0.95);
+		\end{tikzpicture}
+		\caption{$a = (-1, 2)$, $b=1$.}
+	\end{subfigure}%
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+
+		\caption{$a = (1, -1, -1)$, $b=1$.}
+	\end{subfigure}
+\end{figure}
 
 
 
