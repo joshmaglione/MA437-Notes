@@ -702,7 +702,7 @@ $I_n\in\mathrm{Mat}_{n}(\R)$ for the identity matrix. For matrices $A,B\in
 Now we begin our analysis of the set of feasible solutions to an LP. We begin by
 looking at the features of its geometry.
 
-\begin{ex}
+\begin{ex}\label{ex:sewing-feasible}
 	Let's consider the standard form of the LP in \Cref{ex:sewing}. In
 	particular, the feasible solutions are constrained by $J,T \geq 0$ and 
 	\begin{align*}
@@ -716,7 +716,7 @@ looking at the features of its geometry.
     		\draw[->] (0,-0.25) -- (0,5) node[above] {$T$};
 			\draw (-0.25,4.25) -- (4.25,-0.25);
 			\draw (-0.25,3.15) -- (5.416,-0.25);
-			\draw[ultra thick, fill=Crimson] (0,0) -- (4,0) -- (2.5,1.5) -- (0,3) -- (0,0);
+			\draw[ultra thick, fill=RoyalBlue, opacity=0.8] (0,0) -- (4,0) -- (2.5,1.5) -- (0,3) -- (0,0);
 			\node at (1.5, 3.75) {{\footnotesize $J + T = 4$}};
 			\node at (5, 1) {{\footnotesize $3J + 5T = 15$}};
 		\end{tikzpicture}
@@ -743,10 +743,10 @@ are planes.
 	\begin{tikzpicture}
 		\draw[->] (-2,0) -- (2,0) node[right] {$x_1$};
 		\draw[->] (0,-2) -- (0,2) node[above] {$x_2$};
-		\draw[<->, ultra thick, Crimson] (-1.9,-0.45) -- (1.9,1.45);
-		\draw[<->, thick, RoyalBlue, dashed] (-1.9, -0.95) -- (1.9, 0.95);
+		\draw[<->, ultra thick, RoyalBlue] (-1.9,-0.45) -- (1.9,1.45);
+		\draw[<->, thick, Crimson, dashed] (-1.9, -0.95) -- (1.9, 0.95);
 	\end{tikzpicture}
-	\caption{The line given by $a = (-1, 2)$, $b=1$ in red, and the line with $a = (-1, 2)$, $b=0$ is in blue.}
+	\caption{The line given by $a = (-1, 2)$, $b=1$ in blue, and the line with $a = (-1, 2)$, $b=0$ is in red.}
 \end{figure}
 
 Hyperplanes $H$ in $\R^n$ partition $\R^n$ into three sets: the points ``below''
@@ -777,13 +777,175 @@ are half-spaces of $\R^n$. The \define{closed half-spaces} are
 	$\R^4$.
 \end{ex}
 
-What does this have to do with LPs?
+What does this have to do with LPs? Our constraint inequalities define closed
+half-spaces, and if we want to look at the set of feasible solutions, such
+points must satisfy all inequalities. Geometrically, the feasible solutions are
+contained in the intersection of all of the close half-spaces, and every point
+in this intersection must therefore be a feasible solution since it satisfies
+all of the constraints. All of this implies that the set of feasible solutions
+is a finite intersection of closed half-spaces.
 
+\begin{ex}
+	The following are the constraints for some LP and the corresponding set of feasible solutions.
 
+	\noindent \begin{minipage}{0.35\textwidth}
+		\begin{align*}
+			x, y, z &\geq 0, \\ 
+			5x + 3y + 5z &\leq 15, \\ 
+			10x + 4y + 5z &\leq 20.
+		\end{align*}
+	\end{minipage}~%
+	\begin{minipage}{0.6\textwidth}
+		\centering
+		\begin{tikzpicture}%
+			[x={(0.731403cm, -0.141984cm)},
+			y={(0.681946cm, 0.152416cm)},
+			z={(-0.000094cm, 0.978064cm)},
+			scale=1.000000,
+			back/.style={loosely dotted, thin},
+			edge/.style={color=black, thick},
+			facet/.style={fill=RoyalBlue,fill opacity=0.800000},
+			vertex/.style={inner sep=1pt,circle,draw=green!25!black,fill=green!75!black,thick}]
+		\draw[color=black,thick,->] (0,0,0) -- (3.5,0,0) node[anchor=north east]{$x$};
+		\draw[color=black,thick,->] (0,0,0) -- (0,5.5,0) node[anchor=north west]{$y$};
+		\draw[color=black,thick,->] (0,0,0) -- (0,0,3.5) node[anchor=south]{$z$};
+		\coordinate (0.00000, 5.00000, 0.00000) at (0.00000, 5.00000, 0.00000);
+		\coordinate (2.00000, 0.00000, 0.00000) at (2.00000, 0.00000, 0.00000);
+		\coordinate (1.00000, 0.00000, 2.00000) at (1.00000, 0.00000, 2.00000);
+		\coordinate (0.00000, 0.00000, 3.00000) at (0.00000, 0.00000, 3.00000);
+		\coordinate (0.00000, 0.00000, 0.00000) at (0.00000, 0.00000, 0.00000);
+		\draw[edge,back] (0.00000, 5.00000, 0.00000) -- (0.00000, 0.00000, 0.00000);
+		\fill[facet] (1.00000, 0.00000, 2.00000) -- (0.00000, 5.00000, 0.00000) -- (2.00000, 0.00000, 0.00000) -- cycle {};
+		\fill[facet] (0.00000, 0.00000, 3.00000) -- (0.00000, 5.00000, 0.00000) -- (1.00000, 0.00000, 2.00000) -- cycle {};
+		\fill[facet] (0.00000, 0.00000, 0.00000) -- (2.00000, 0.00000, 0.00000) -- (1.00000, 0.00000, 2.00000) -- (0.00000, 0.00000, 3.00000) -- cycle {};
+		\draw[edge] (0.00000, 5.00000, 0.00000) -- (2.00000, 0.00000, 0.00000);
+		\draw[edge] (0.00000, 5.00000, 0.00000) -- (1.00000, 0.00000, 2.00000);
+		\draw[edge] (0.00000, 5.00000, 0.00000) -- (0.00000, 0.00000, 3.00000);
+		\draw[edge] (2.00000, 0.00000, 0.00000) -- (1.00000, 0.00000, 2.00000);
+		\draw[edge] (2.00000, 0.00000, 0.00000) -- (0.00000, 0.00000, 0.00000);
+		\draw[edge] (1.00000, 0.00000, 2.00000) -- (0.00000, 0.00000, 3.00000);
+		\draw[edge] (0.00000, 0.00000, 3.00000) -- (0.00000, 0.00000, 0.00000);
+		\end{tikzpicture}
+	\end{minipage}
+\end{ex}
 
+But wait, there's more! The objective function in an LP in standard form is
+linear: 
+\begin{align*}
+	z &= c^{\top}x.
+\end{align*}
+We rephrase the LP in the following way.
 
+\begin{mybox}[Hyperplanes all the way down]
+	Find the largest $k\in \R$ such that 
+	\begin{align*}
+		c^{\top}x = k
+	\end{align*}
+	subject to $x\geq 0$ and
+	\begin{align*}
+		Ax &\leq b.
+	\end{align*}
+\end{mybox}
 
+\begin{ex}
+	Let's bring in the objective function from the sewing problem in
+	\Cref{ex:sewing}. We want to maximize 
+	\begin{align*}
+		z &= 100J + 120T.
+	\end{align*}
+	Instead, let's plot a number of hyperplanes (i.e.\ lines) of the form 
+	\begin{align*}
+		100J + 120T = k
+	\end{align*}
+	for different values of $k$. We use the feasibility region plotted in
+	\Cref{ex:sewing-feasible}.
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[->] (-0.25,0) -- (6,0) node[right] {$J$};
+    		\draw[->] (0,-0.25) -- (0,5) node[above] {$T$};
+			\draw[ultra thick, fill=RoyalBlue, opacity=0.8] (0,0) -- (4,0) -- (2.5,1.5) -- (0,3) -- (0,0);
+			\draw[ultra thick, Aqua] (-0.25, 0.21) -- (0.3, -0.25);
+			\draw[ultra thick, Aqua] (-0.25, 1.875) -- (2.3, -0.25);
+			\draw[ultra thick, Aqua] (-0.25, 3.54) -- (4.3, -0.25);
+			\node at (0.3,-0.5) {{\footnotesize $k=0$}};
+			\node at (2.4,-0.5) {{\footnotesize $k=200$}};
+			\node at (4.4,-0.5) {{\footnotesize $k=400$}};
+		\end{tikzpicture}
+	\end{center}
+	We can see the optimal solution to the sewing problem.
+\end{ex}
 
+\begin{ex}\label{ex:no-optimal}
+	Consider the following LP.
+
+	\begin{myboxex}[0.65]
+		Maximize 
+		\begin{align*}
+			z &= 2x + 5y
+		\end{align*}
+		subject to $x,y\geq 0$ and 
+		\begin{align*}
+			-3x+2y &\leq 6, \\ 
+			-x-2y &\leq -2
+		\end{align*}
+	\end{myboxex}
+
+	Does the LP have an optimal solution? Let's plot the feasible solutions and
+	a few hyperplanes of the form $2x+5y = k$. 
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[->] (-0.25,0) -- (5,0) node[right] {$x$};
+    		\draw[->] (0,-0.25) -- (0,5) node[above] {$y$};
+			\fill[fill=RoyalBlue, opacity=0.8] (1.33,5) -- (0,3) -- (0,1) -- (2,0) -- (5,0) -- (5,5);
+			\draw[ultra thick] (1.33,5) -- (0,3) -- (0,1) -- (2,0) -- (5,0);
+			\draw[ultra thick, Aqua] (-0.25, 2.1) -- (5.25, -0.1);
+			\draw[ultra thick, Aqua] (-0.25, 4.1) -- (5.25, 1.9);
+			\draw[ultra thick, Aqua] (1.875, 5.25) -- (5.25, 3.9);
+			\node at (-0.85, 2.1) {{\footnotesize $k=10$}};
+			\node at (-0.85, 4.1) {{\footnotesize $k=20$}};
+			\node at (1.9, 5.5) {{\footnotesize $k=30$}};
+		\end{tikzpicture}
+	\end{center}
+	Note that the feasible solutions are not \emph{bounded}---more on this
+	later. No matter how large a $k$ we get, we can always find feasible
+	solutions that yield a larger $k$. Hence, there is no optimal solution.
+\end{ex}
+
+\begin{ex}
+	We take the LP from \Cref{ex:no-optimal} and change the objective function
+	slightly. Does it have an optimal solution?
+
+	\begin{myboxex}[0.65]
+		Minimize
+		\begin{align*}
+			z &= 3x + 5y
+		\end{align*}
+		subject to $x,y\geq 0$ and 
+		\begin{align*}
+			-3x+2y &\leq 6, \\ 
+			-x-2y &\leq -2
+		\end{align*}
+	\end{myboxex}
+
+	Again, we'll just plot it.
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[->] (-0.25,0) -- (5,0) node[right] {$x$};
+    		\draw[->] (0,-0.25) -- (0,5) node[above] {$y$};
+			\fill[fill=RoyalBlue, opacity=0.8] (1.33,5) -- (0,3) -- (0,1) -- (2,0) -- (5,0) -- (5,5);
+			\draw[ultra thick] (1.33,5) -- (0,3) -- (0,1) -- (2,0) -- (5,0);
+			\draw[ultra thick, Crimson] (-0.25, 1.15) -- (2.083, -0.25);
+			\draw[ultra thick, Aqua] (-0.25, 2.15) -- (3.75, -0.25);
+			\draw[ultra thick, Aqua] (-0.25, 4.15) -- (5.25, 0.85);
+			\draw[ultra thick, Aqua] (1.25, 5.25) -- (5.25, 2.85);
+			\node at (-0.8, 1.1) {{\footnotesize $k=5$}};
+			\node at (-0.85, 2.1) {{\footnotesize $k=10$}};
+			\node at (-0.85, 4.1) {{\footnotesize $k=20$}};
+			\node at (1.2, 5.5) {{\footnotesize $k=30$}};
+		\end{tikzpicture}
+	\end{center}
+	There is an optimal solution. It occurs at $(0,1)$ where $z=5$.
+\end{ex}
 
 \newpage
 
