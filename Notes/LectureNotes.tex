@@ -947,6 +947,16 @@ We rephrase the LP in the following way.
 	There is an optimal solution. It occurs at $(0,1)$ where $z=5$.
 \end{ex}
 
+\begin{defn}\label{def:bounded}
+	A set $S\subseteq \R^n$ is \define{bounded} if there exists $r>0$ such that
+	for all $u,v\in S$ the Euclidean distance $d(u,v) \leq r$.
+\end{defn}
+
+Note the order of quantifiers in \Cref{def:bounded}! Informally speaking, a set
+is bounded if we can wrap it in a ball (of finite radius). Are feasible
+solutions always bounded? Unbounded? 
+
+
 \subsection{Convexity}
 
 Let's look at some of the feasible solutions we have plotted so far. 
@@ -1030,9 +1040,66 @@ In the middle, we have points like $L_{u,v}(1/2) = (u + v)/2$ and $L_{u,v}(1/5)
 	\end{align*}
 \end{defn}
 
-\begin{prop}
+\begin{prop}\label{prop:convex-LP}
 	The feasible set of solutions of an LP forms a convex set. 
 \end{prop}
+
+Try to prove \Cref{prop:convex-LP} yourself. Consider first proving that closed
+half-spaces are convex. 
+
+Let's consider two distinct feasible solutions $u$ and $v$ to an LP. We have two
+cases: either they take the same value in the objective function or they have
+different values. Assume the first, that is, suppose 
+\begin{align*}
+	c^{\top}u = c^{\top}v.
+\end{align*}
+What can we say about the values of the points on the line segment $L_{u,v}$?
+Let $w = vt + (1 - t)u$ for some $t\in [0, 1]$. Then 
+\begin{align*}
+	c^{\top}w &= c^{\top}(tv + (1 - t)u) \\
+	&= c^{\top}tv + c^{\top}(1-t)u \\
+	&= tc^{\top}v + c^{\top}u - tc^{\top}u \\
+	&= c^{\top}u.
+\end{align*}
+Hence, all points on the $L_{u,v}$ have the same value under the objective
+function. 
+
+Let's consider the second case, that is, the values are distinct. Assume that 
+\begin{align*}
+	c^{\top} u < c^{\top}v,
+\end{align*}
+and suppose $w = tv + (1-t)u$ for some $t\in [0,1]$. Some of the same analysis applies in this case: namely, 
+\begin{align*}
+	c^{\top}w &= tc^{\top}v + c^{\top}u - tc^{\top}u \\
+	&= c^{\top}u + t(c^{\top}v - c^{\top}u).
+\end{align*}
+Therefore, for all $t\in [0,1]$, we have 
+\begin{align*}
+	c^{\top}u \leq c^{\top}w \leq c^{\top}v.
+\end{align*}
+Hence, the endpoint of $L_{u,v}$ have the extreme values. 
+
+We summarize all of this in the following proposition. 
+
+\begin{prop}
+	Let $S$ be the set of feasible solutions to an LP. If $L\subseteq S$ is a
+	line segment, then one of the following holds.
+	\begin{enumerate}
+		\item The objective function is constant on $L$.
+		\item The endpoints of $L$ are the extreme points under the objective
+		function. 
+	\end{enumerate}
+\end{prop}
+
+\subsection{Convex polyhedra}
+
+
+
+
+
+
+
+
 
 
 
