@@ -947,6 +947,102 @@ We rephrase the LP in the following way.
 	There is an optimal solution. It occurs at $(0,1)$ where $z=5$.
 \end{ex}
 
+\subsection{Convexity}
+
+Let's look at some of the feasible solutions we have plotted so far. 
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\begin{tikzpicture}[scale=0.6]
+			\draw[->] (-0.25,0) -- (6,0) node[right] {$J$};
+    		\draw[->] (0,-0.25) -- (0,5) node[above] {$T$};
+			\draw[ultra thick, fill=RoyalBlue, opacity=0.8] (0,0) -- (4,0) -- (2.5,1.5) -- (0,3) -- (0,0);
+		\end{tikzpicture}
+	\end{subfigure}%
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\begin{tikzpicture}[scale=0.6]
+			\draw[->] (-0.25,0) -- (5,0) node[right] {$x$};
+    		\draw[->] (0,-0.25) -- (0,5) node[above] {$y$};
+			\fill[fill=RoyalBlue, opacity=0.8] (1.33,5) -- (0,3) -- (0,1) -- (2,0) -- (5,0) -- (5,5);
+			\draw[ultra thick] (1.33,5) -- (0,3) -- (0,1) -- (2,0) -- (5,0);
+		\end{tikzpicture}
+	\end{subfigure}%
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\begin{tikzpicture}%
+			[x={(0.731403cm, -0.141984cm)},
+			y={(0.681946cm, 0.152416cm)},
+			z={(-0.000094cm, 0.978064cm)},
+			scale=1.000000,
+			back/.style={loosely dotted, thin},
+			edge/.style={color=black, thick},
+			facet/.style={fill=RoyalBlue,fill opacity=0.800000},
+			vertex/.style={inner sep=1pt,circle,draw=green!25!black,fill=green!75!black,thick}, scale=0.9]
+			\draw[color=black,thick,->] (0,0,0) -- (3.5,0,0) node[anchor=north east]{$x$};
+			\draw[color=black,thick,->] (0,0,0) -- (0,5.5,0) node[anchor=north west]{$y$};
+			\draw[color=black,thick,->] (0,0,0) -- (0,0,3.5) node[anchor=south]{$z$};
+			\coordinate (0.00000, 5.00000, 0.00000) at (0.00000, 5.00000, 0.00000);
+			\coordinate (2.00000, 0.00000, 0.00000) at (2.00000, 0.00000, 0.00000);
+			\coordinate (1.00000, 0.00000, 2.00000) at (1.00000, 0.00000, 2.00000);
+			\coordinate (0.00000, 0.00000, 3.00000) at (0.00000, 0.00000, 3.00000);
+			\coordinate (0.00000, 0.00000, 0.00000) at (0.00000, 0.00000, 0.00000);
+			\draw[edge,back] (0.00000, 5.00000, 0.00000) -- (0.00000, 0.00000, 0.00000);
+			\fill[facet] (1.00000, 0.00000, 2.00000) -- (0.00000, 5.00000, 0.00000) -- (2.00000, 0.00000, 0.00000) -- cycle {};
+			\fill[facet] (0.00000, 0.00000, 3.00000) -- (0.00000, 5.00000, 0.00000) -- (1.00000, 0.00000, 2.00000) -- cycle {};
+			\fill[facet] (0.00000, 0.00000, 0.00000) -- (2.00000, 0.00000, 0.00000) -- (1.00000, 0.00000, 2.00000) -- (0.00000, 0.00000, 3.00000) -- cycle {};
+			\draw[edge] (0.00000, 5.00000, 0.00000) -- (2.00000, 0.00000, 0.00000);
+			\draw[edge] (0.00000, 5.00000, 0.00000) -- (1.00000, 0.00000, 2.00000);
+			\draw[edge] (0.00000, 5.00000, 0.00000) -- (0.00000, 0.00000, 3.00000);
+			\draw[edge] (2.00000, 0.00000, 0.00000) -- (1.00000, 0.00000, 2.00000);
+			\draw[edge] (2.00000, 0.00000, 0.00000) -- (0.00000, 0.00000, 0.00000);
+			\draw[edge] (1.00000, 0.00000, 2.00000) -- (0.00000, 0.00000, 3.00000);
+			\draw[edge] (0.00000, 0.00000, 3.00000) -- (0.00000, 0.00000, 0.00000);
+		\end{tikzpicture}
+	\end{subfigure}
+	\caption{Three sets of feasible solutions}
+\end{figure}
+
+These regions have the property that if one takes two points in that region, say
+$u$ and $v$, then all of the points on the line segment between $u$ and $v$ are
+also in that region. This is not true of all sets in $\R^n$; can you draw an
+example? 
+
+The formula for the line segment between points $u$ and $v$ is 
+\begin{align*}
+	L_{u,v}(t) &= vt + (1 - t)u
+\end{align*}
+where $t\in [0,1]$. Note that at the endpoints, we have 
+\begin{align*}
+	L_{u,v}(0) &= u, & L_{u,v}(1) &= v.
+\end{align*}
+In the middle, we have points like $L_{u,v}(1/2) = (u + v)/2$ and $L_{u,v}(1/5)
+= (4u + v)/5$. 
+
+\begin{defn}
+	A set $S\subseteq \R^n$ is \define{convex} if it contains all points on all
+	line segments between every pair of points in $S$. In symbols, this means
+	that for all $u,v\in S$, 
+	\begin{align*}
+		\{L_{u,v}(t) \mid t\in [0,1]\} \subseteq S.
+	\end{align*}
+\end{defn}
+
+\begin{prop}
+	The feasible set of solutions of an LP forms a convex set. 
+\end{prop}
+
+
+
+
+
+
+
+
+
+
 \newpage
 
 \bibliography{bibliography} 
