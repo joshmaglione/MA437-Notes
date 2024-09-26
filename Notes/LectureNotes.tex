@@ -1206,6 +1206,41 @@ We state and prove some of the fundamental theorems in the theory of linear opti
 	\Cref{prop:extreme-convex}, an optimal solution is an extreme point.
 \end{proof}
 
+\begin{ex}
+	Show that the following LP has infinitely many optimal solutions for $f(x,y)
+	= 4x + 4y$. Show that for $f(x,y) = 4x + y$ there is a unique optimal
+	solution.
+
+	\begin{myboxex}[0.7]
+		Maximize:
+		\begin{align*}
+			z &= f(x,y),
+		\end{align*}
+		subject to the constraints: $x,y\geq 0$ and 
+		\begin{align*}
+			-2x -y &\leq -2, \\
+			x - y &\leq 2, \\
+			x + y &\leq 3.
+		\end{align*}
+	\end{myboxex}
+
+	The plot of this LP looks like the following.
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[->] (-0.25,0) -- (5,0) node[right] {$x$};
+			\draw[->] (0,-0.25) -- (0,5) node[above] {$y$};
+			\draw[ultra thick, fill=RoyalBlue, opacity=0.8] (0,2*1.2) -- (0,3*1.2) -- (2.5*1.2,0.5*1.2) -- (2*1.2,0) -- (1*1.2,0) -- cycle;
+		\end{tikzpicture}
+	\end{center}
+	The extreme points are given by 
+	\begin{align*}
+		\{(1,0),\ (2,0),\ (5/2, 1/2),\ (0, 2),\ (0, 3)\}.
+	\end{align*}
+	With $f(x,y)=4x+4y$, the values are $4, 8, 12, 8, 12$, respectively.
+	Therefore, all points on the line segment between $(0,3)$ and $(5/2, 1/2)$
+	are optimal solutions. If, instead, $f(x,y)=4x+y$, then the values are
+	$4,8,10.5, 2, 3$. Hence, we have a unique optimal solution at $(5/2, 1/2)$.
+\end{ex}
 
 \begin{thm}
 	Suppose we have an LP in canonical form with constraints $x\geq 0$ and
