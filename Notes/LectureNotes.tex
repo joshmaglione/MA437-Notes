@@ -1206,7 +1206,7 @@ We state and prove some of the fundamental theorems in the theory of linear opti
 	\Cref{prop:extreme-convex}, an optimal solution is an extreme point.
 \end{proof}
 
-\begin{ex}
+\begin{ex}\label{ex:extreme-pts-dim2}
 	Show that the following LP has infinitely many optimal solutions for $f(x,y)
 	= 4x + 4y$. Show that for $f(x,y) = 4x + y$ there is a unique optimal
 	solution.
@@ -1247,7 +1247,15 @@ We state and prove some of the fundamental theorems in the theory of linear opti
 	constraint.
 \end{ex}
 
-\begin{thm}
+\Cref{ex:extreme-pts-dim2} is simple because we can visualize fairly easily all
+of the extreme points. In fact, all extreme points for an LP with two variables
+occur at intersections of lines, which are easy to handle. Without some
+additional tools, it is not an easy task to find extreme points of
+higher-dimensional LPs. The next two theorems provide a roadmap to find these
+extreme points. 
+
+
+\begin{thm}\label{thm:extreme-I}
 	Suppose we have an LP in canonical form with constraints $x\geq 0$ and
 	$Ax=b$ for some $A=\begin{bmatrix} a_1 & a_2 & \cdots & a_{n+s}
 	\end{bmatrix}\in\mathrm{Mat}_{m\times n+s}(\R)$. Assume that 
@@ -1282,7 +1290,7 @@ We state and prove some of the fundamental theorems in the theory of linear opti
 	By our assumptions, $u_j = x_j'$ for all $j\in \{1,\dots, m\}$, which is a contradiction. Hence, $x$ is extreme.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{thm:extreme-II}
 	Suppose we have an LP in canonical form. If $x$ is an extreme point of the
 	set of feasible solutions, then the columns of $A$ corresponding to positive
 	coordinates of $x$ form a set of linearly independent vectors of
@@ -1308,10 +1316,161 @@ We state and prove some of the fundamental theorems in the theory of linear opti
 	Hence, the set $\{a_1,\dots, a_k\}$ is linearly independent. 
 \end{proof}
 
+So from \Cref{thm:extreme-II}, the columns of $A$ corresponding to positive
+entries of an extreme point $x$ (contained in the set of feasible solutions to
+an LP in canonical form) are linearly independent. Since they exist in $\R^m$,
+and we cannot have more than $m$ linearly independent vectors in $\R^m$, we have
+the following corollary to \Cref{thm:extreme-II}.
 
+\begin{cor}
+	At most $m$ entries of an extreme point can be positive. The rest are zero.
+\end{cor}
 
+Given an LP in canonical form with constraint matrix $A\in \mathrm{Mat}_{m\times
+s}(\R)$ where $s\geq m$, we can select subsets of $m$ columns of $A$ that are
+linearly independent to find extreme points. Let's first give a name to these points.
 
+\begin{defn}
+	A \define{basic solution} to $Ax=b$ is a vector $x$ with exactly $m$ nonzero
+	entries. The variables associated to the zero entries of $x$ are called
+	\define{non-basic variables}, and the others are called \define{basic
+	variables}.
+\end{defn}
 
+\begin{ex}
+	A basic solution to the equation 
+	\begin{align*}
+		\begin{bmatrix}
+			1 & 0 & 1 & 0 & 1 & 0 \\ 
+			0 & -1 & -1 & 0 & -1 & -1 \\
+			1 & 2 & 2 & 1 & 1 & 1 
+		\end{bmatrix} x &= \begin{bmatrix}
+			b_1 \\ b_2 \\ b_3
+		\end{bmatrix}
+	\end{align*}
+	is obtained by finding three linearly independent columns. For example, the
+	first, fourth, and fifth columns:
+	\begin{align*}
+		\begin{bmatrix}
+			1 & 0 & 1 \\ 
+			0 & 0 & -1 \\
+			1 & 1 & 1 
+		\end{bmatrix} x' &= \begin{bmatrix}
+			b_1 \\ b_2 \\ b_3
+		\end{bmatrix}
+	\end{align*}
+	yield the basic solution $x=(b_1+b_2, 0, 0, b_3-b_1, -b_2, 0)$.
+\end{ex}
+
+Note that basic solutions need not be feasible solutions, that is, they may
+contain negative entries. A feasible solution that is also a basic solution is
+called a \define{basic feasible solution}.
+
+\begin{exercise}
+	Consider an LP in canonical form with 
+	\begin{align*}
+		A &= \begin{bmatrix}
+			2 & 3 & 1 & 0 & 0 \\ 
+			-1 & 1 & 0 & 2 & 1 \\
+			0 & 6 & 1 & 0 & 3 
+		\end{bmatrix}, & b &= \begin{bmatrix}
+			1 \\ 1 \\ 4
+		\end{bmatrix}.
+	\end{align*}
+	Which of the following points are basic solutions?
+	\begin{align*}
+		u &= \begin{bmatrix}
+			0 \\ 2 \\ -5 \\ 0 \\ -1 
+		\end{bmatrix}, & v &= \begin{bmatrix}
+			0 \\ 0 \\ 1 \\0 \\ 1
+		\end{bmatrix}, & w &= \begin{bmatrix}
+			1 \\ 0 \\ -1 \\ 1 \\ 0
+		\end{bmatrix}
+	\end{align*}
+	Are any of them basic feasible solutions?
+\end{exercise}
+
+\begin{thm}[Extremely basic feasible solutions]
+	Every basic feasible solution of an LP in canonical form is an extreme point
+	of the set of feasible solutions. The converse is also true.
+\end{thm}
+
+Assuming the constraint matrix $A\in\mathrm{Mat}_{m\times s}(\R)$, with $s\geq
+m$, then we know an \emph{upper bound} on the number of basic feasible
+solutions. It is 
+\begin{align*}
+	\binom{s}{m} &= \dfrac{s!}{m!(s-m)!} .
+\end{align*}
+
+We have been dealing primarily with canonical form. What can we do about standard form?
+
+Suppose $x'\in \R^s$ is an extreme point of the set of feasible solutions in
+canonical form. Then by \emph{truncating} $x'$ to $x\in \R^m$ we obtain an
+extreme point of the set of feasible solutions in standard form. Thus, we go
+from SF to CF via adding slack variables, and from CF to SF by truncating those
+slack variables. 
+
+Try these problems out yourself.
+
+\begin{exercise}
+	Consider an LP in CF with 
+	\begin{align*}
+		A &= 
+		\begin{bmatrix}
+			3 & 0 & 1 & 1 & 0 \\
+			2 & 1 & 0 & 0 & 0 \\
+			4 & 0 & 3 & 0 & 1 
+		\end{bmatrix}, & 
+		b &= \begin{bmatrix}
+			5 \\ 3\\ 6
+		\end{bmatrix}.
+	\end{align*}
+	Which of the points 
+	\begin{align*}
+		x_1 &= \begin{bmatrix}
+			0 \\ 3 \\ 0 \\ 5 \\ 6 
+		\end{bmatrix}, & x_2 &= \begin{bmatrix}
+			0 \\ 3 \\ 5 \\ 0 \\ -9 
+		\end{bmatrix}, & x_3 &= \begin{bmatrix}
+			1 \\ 1 \\ 1/2 \\ 3/2 \\ 1/2
+		\end{bmatrix}, & x_4 &= \begin{bmatrix}
+			1/2 \\ 1 \\ 1 \\ 0 \\ 2
+		\end{bmatrix}, & x_5 &= \begin{bmatrix}
+			3/2 \\ 0 \\ 0 \\ 1/2 \\ 0 
+		\end{bmatrix}
+	\end{align*}
+	is 
+	\begin{enumerate}[label=$(\roman*)$]
+		\item a basic solution,
+		\item a basic feasible solution,
+		\item an extreme point of the set of feasible solutions,
+		\item a feasible solution.
+	\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+	Consider the following LP.
+
+	\begin{myboxex}[0.75]
+		Maximize 
+		\begin{align*}
+			z &= 4x + 2y + 7z
+		\end{align*}
+		subject to the constraints $x,y,z\geq 0$ and 
+		\begin{align*}
+			2x - y + 4z &\leq 18, \\
+			4x + 2x + 5z &\leq 10.
+		\end{align*}
+	\end{myboxex}
+	\begin{enumerate}
+		\item Put this into canonical form. 
+		\item For each extreme point of the LP in canonical form, identify the
+		basic variables.
+		\item Write down all of the extreme points for both the standard form
+		and canonical form.
+		\item Which of the extreme points are optimal solutions?
+	\end{enumerate}
+\end{exercise}
 
 
 
