@@ -1483,6 +1483,8 @@ consider \emph{all} extreme points. Instead, we start at an extreme point, and
 then move to a ``neighboring'' extreme point if it further maximizes our
 objective function.
 
+\subsection{Build up}
+
 \begin{defn}
 	Two distinct extreme points of an LP in CF are \define{adjacent} if as basic
 	feasible solutions they have all but one basic variable in common. 
@@ -1511,14 +1513,86 @@ form, we have the following LP.
 	\end{align*}
 	subject to the constraints $J,T,s_1,s_2\geq 0$ and 
 	\begin{align*}
-		2J + 2T + s_1 &= 8, \\ 
-		3J + 5Y + s_2 &= 15.
+		2J + 2T + s_1 \phantom{+ s_2 } &= 8, \\ 
+		3J + 5Y \phantom{+ s_1 } + s_2 &= 15.
 	\end{align*}
 \end{myboxex}
 
 There is an obvious recipe to cook up a basic feasible solution: set all
 non-slack variables to $0$ and ``solve'' for the slack variables. In our case,
-the point is $(0,0,8,15)^{\top}$.
+the point is $(0,0,8,15)^{\top}$, and the basic variables are $s_1$ and $s_2$.
+Really, this should be thought of taking the third and fourth columns and
+solving.
+\begin{align*}
+	\begin{bmatrix}
+		1 & 0 \\ 
+		0 & 1 
+	\end{bmatrix}
+	\begin{bmatrix}
+		s_1 \\ s_2 
+	\end{bmatrix} &= \begin{bmatrix}
+		8 \\ 15
+	\end{bmatrix} .
+\end{align*}
+
+We can move to an adjacent extreme point by swapping out a basic variable. We
+could replace $s_1$ with $J$ for example. Thus we would take the first and last
+columns of $A$ to solve
+\begin{align*}
+	\begin{bmatrix}
+		2 & 0 \\
+		3 & 1 
+	\end{bmatrix} \begin{bmatrix}
+		J \\ s_2 
+	\end{bmatrix} &= \begin{bmatrix}
+		8 \\ 15
+	\end{bmatrix}.
+\end{align*}
+This yields the solution $(4, 0, 0, 3)^{\top}$. We could have instead exchanged
+$s_2$ with $T$ yielding
+\begin{align*}
+	\begin{bmatrix}
+		1 & 2 \\
+		0 & 5 
+	\end{bmatrix} \begin{bmatrix}
+		s_1 \\ T 
+	\end{bmatrix} &= \begin{bmatrix}
+		8 \\ 15
+	\end{bmatrix}
+\end{align*}
+and a solution of $(0, 3, 2, 0)^{\top}$. For now, these choices are arbitrary,
+but this is the game that is played with the simplex method.
+
+We will initialize a tableau to guide us through extreme points.
+\begin{center}
+	\begin{tabular}{|c|cccc|c|}
+		
+	\end{tabular}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
