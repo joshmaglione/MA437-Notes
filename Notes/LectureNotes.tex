@@ -1183,6 +1183,7 @@ are convex combinations of a set of points is convex.
 We won't prove \Cref{prop:extreme-convex}.
 
 \subsection{Extreme point theorem}
+\label{sec:extreme}
 
 We state and prove some of the fundamental theorems in the theory of linear optimization. 
 
@@ -1473,12 +1474,51 @@ Try these problems out yourself.
 \end{exercise}
 
 
+\section{The simplex method}
 
+By \Cref{sec:extreme}, optimal solutions to LPs are extreme points of a convex
+polyhedron. Although only finitely many, running through all of these points can
+be expensive. The key result of the simplex method is that we do not need to
+consider \emph{all} extreme points. Instead, we start at an extreme point, and
+then move to a ``neighboring'' extreme point if it further maximizes our
+objective function.
 
+\begin{defn}
+	Two distinct extreme points of an LP in CF are \define{adjacent} if as basic
+	feasible solutions they have all but one basic variable in common. 
+\end{defn}
 
+\begin{ex}
+	The pair of extreme points 
+	\[
+		(0 , 0 , 8 , 15)^{\top}
+		\qquad (3 , 0 , 2 , 0)^{\top}
+	\]
+	are adjacent, but the following pairs of points are not:
+	\[ 
+		(0 , 0 , 8 , 15)^{\top}
+		\qquad (3/2 , 5/2 , 0 , 0)^{\top}.
+	\]
+\end{ex}
 
+Let's consider the sewing problem from \Cref{ex:sewing} again. In canonical
+form, we have the following LP.
 
+\begin{myboxex}[0.75]
+	Maximize
+	\begin{align*}
+		z &= 100J + 120T
+	\end{align*}
+	subject to the constraints $J,T,s_1,s_2\geq 0$ and 
+	\begin{align*}
+		2J + 2T + s_1 &= 8, \\ 
+		3J + 5Y + s_2 &= 15.
+	\end{align*}
+\end{myboxex}
 
+There is an obvious recipe to cook up a basic feasible solution: set all
+non-slack variables to $0$ and ``solve'' for the slack variables. In our case,
+the point is $(0,0,8,15)^{\top}$.
 
 
 
