@@ -1762,7 +1762,60 @@ We arrive at two conclusions concerning $\theta$-ratios:
 
 \WEEK{5}
 
+\begin{ex}
+	Let's use this method to solve the following LP.
 
+	\begin{myboxex}[0.75]
+		Maximize 
+		\begin{align*}
+			z &= x_1+3x_2+5x_3 
+		\end{align*}
+		subject to $x_1,x_2,x_3\geq 0$ and 
+		\begin{align*}
+			2x_1 - 5x_2 + x_3 &\leq 3, \\
+			x_1 +4x_2 \phantom{\;\,+ x_3} &\leq 5.
+		\end{align*}
+	\end{myboxex}
+
+	\noindent First we will convert this to canonical form by adding in two slack
+	variables $s_1$ and $s_2$, and we will start with the extreme point
+	$(0,0,0,3,5)$. Thus, our initial tableau is
+	\begin{center}
+		\begin{tabular}{|c|cccccc|c|}
+			\hline
+			& $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+			$s_1$ & $2$ & $-5$ & $1$ & $1$ & $0$ & $0$ & $3$ \\ \hline
+			$s_2$ & $1$ & $4$ & $0$ & $0$ & $1$ & $0$ & $5$ \\ \hline 
+			& $-1$ & $-3$ & $-5$ & $0$ & $0$ & $1$ & $0$ \\ \hline
+		\end{tabular}
+	\end{center}
+	Our first entering variable is $x_3$ because $-5$ is the most negative entry in the objective row. There is only one $\theta$-ratio that is positive, and it corresponds to $s_1$. Hence $s_1$ is our first departing variable. Thus, the new tableau is 
+	\begin{center}
+		\begin{tabular}{|c|cccccc|c|}
+			\hline
+			& $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+			$x_3$ & $2$ & $-5$ & $1$ & $1$ & $0$ & $0$ & $3$ \\ \hline
+			$s_2$ & $1$ & $4$ & $0$ & $0$ & $1$ & $0$ & $5$ \\ \hline 
+			& $9$ & $-28$ & $0$ & $5$ & $0$ & $1$ & $15$ \\ \hline
+		\end{tabular}
+	\end{center}
+
+	Now we see that the next entering variable is $x_2$. The two $\theta$-ratios
+	are $-3/5$ and $5/4$. Since we ignore negative $\theta$-ratios, the next
+	departing variable is $s_2$. Hence the new tableau is 
+	\begin{center}
+		\begin{tabular}{|c|cccccc|c|}
+			\hline
+			& $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+			$x_3$ & $13/4$ & $0$ & $1$ & $1$ & $5/4$ & $0$ & $37/4$ \\ \hline
+			$x_2$ & $1/4$ & $1$ & $0$ & $0$ & $1/4$ & $0$ & $5/4$ \\ \hline 
+			& $16$ & $0$ & $0$ & $5$ & $7$ & $1$ & $50$ \\ \hline
+		\end{tabular}
+	\end{center}
+	Therefore the optimal solution to the LP in canonical form is $(0,5/4,
+	37/4,0,0)$, and hence, the optimal solution to the original LP is $(0,5/4,
+	37/4)$.
+\end{ex}
 
 
 
