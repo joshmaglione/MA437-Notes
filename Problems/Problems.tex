@@ -1,0 +1,158 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	urlcolor=blue,
+	citecolor=blue,
+}
+\usepackage[margin=3cm]{geometry}
+\usepackage{mathpazo}
+\usepackage{url}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{mathrsfs}
+\usepackage{afterpage}
+\usepackage[svgnames]{xcolor}
+\usepackage{marvosym}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{pgfplots}
+\usetikzlibrary{3d}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{con*}{Conjecture}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{ex}[thm]{Example}
+\newtheorem{quest}[thm]{Question}
+\newtheorem{obs}[thm]{Observation}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{exercise}{Exercise}
+
+\newenvironment{mybox}[1][]{%
+\ifstrempty{#1}%
+% if condition (without title)
+{\mdfsetup{%
+    frametitle={%
+        %\tikz[baseline=(current bounding box.east),outer sep=0pt]
+        %\node[anchor=east,rectangle,fill=RoyalBlue!80] {};
+		}
+    }%
+% else condition (with title)
+}{\mdfsetup{%
+    frametitle={%
+        \tikz[baseline=(current bounding box.east),outer sep=0pt]
+        \node[anchor=east,rectangle,fill=RoyalBlue!80,text=white]
+        {\strut #1};}%
+    }%
+}%
+% Both conditions
+\mdfsetup{%
+    innertopmargin=10pt,linecolor=RoyalBlue!80,%
+    linewidth=2pt,topline=true,%
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax%
+}
+\begin{mdframed}[]\relax}{%
+\end{mdframed}}
+
+\newenvironment{myboxgreen}[1][]{%
+\ifstrempty{#1}%
+% if condition (without title)
+{\mdfsetup{%
+    frametitle={%
+        %\tikz[baseline=(current bounding box.east),outer sep=0pt]
+        %\node[anchor=east,rectangle,fill=RoyalBlue!80] {};
+		}
+    }%
+% else condition (with title)
+}{\mdfsetup{%
+    frametitle={%
+        \tikz[baseline=(current bounding box.east),outer sep=0pt]
+        \node[anchor=east,rectangle,fill=ForestGreen!80,text=white]
+        {\strut #1};}%
+    }%
+}%
+% Both conditions
+\mdfsetup{%
+    innertopmargin=10pt,linecolor=ForestGreen!80,%
+    linewidth=2pt,topline=true,%
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax%
+}
+\begin{mdframed}[]\relax}{%
+\end{mdframed}}
+
+\newenvironment{myboxex}[1][1]{%
+\vspace{0.25em}
+\noindent \begin{minipage}{0.99\textwidth}
+	\centering
+	\begin{minipage}{#1\textwidth}
+		\begin{myboxgreen}[]{}
+}{%
+		\end{myboxgreen}
+	\end{minipage}
+\end{minipage}
+\vspace{0.25em}
+}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\define}[1]{\textbf{\textit{#1}}}
+\newcommand{\WEEK}[1]{%
+\hfill Week #1
+
+\vspace{-1em}
+
+\begin{center}
+	\rule{\textwidth}{2pt}
+\end{center}
+\vspace{0.5em}%
+}
+
+\setcounter{tocdepth}{2}
+
+\allowdisplaybreaks
+
+\title{The Mathematics of Decision Making I: Additional Problems}
+\author{Joshua Maglione}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+
+
+
+\end{document}

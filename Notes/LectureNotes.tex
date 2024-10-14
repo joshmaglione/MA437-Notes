@@ -1567,36 +1567,200 @@ but this is the game that is played with the simplex method.
 
 We will initialize a tableau to guide us through extreme points.
 \begin{center}
-	\begin{tabular}{|c|cccc|c|}
-		
+	\begin{tabular}{|c|ccccc|c|}
+		\hline
+		& $J$ & $T$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+		$s_1$ & 2 & 2 & 1 & 0 & 0 & 8 \\ \hline
+		$s_2$ & 3 & 5 & 0 & 1 & 0 & 15 \\ \hline 
+		& $-100$ & $-120$ & 0 & 0 & 1 & 0 \\ \hline
+	\end{tabular}
+\end{center}
+Here, we have the two basic variables in the first (leftmost) column. The top
+row has all of the variables plus the objective function. The second row
+corresponds to the first constraint equation: $2J+2T+s_1=8$, and the third row
+corresponds to the second constraint equation. The last row is the
+\define{objective row}, and it corresponds to $-100J - 120T + z = 0$. The final
+column are the values of the equations at the particular extreme point
+determined by the basic variables in the first column. For example, the current
+extreme point is $(0,0,8,15)$, and evaluating this at $2J+2T+s_1$, at
+$3J+5T+s_2$, and $-100J - 120T + z$ yields $8$, $15$, and $0$, respectively.
+
+The Simplex Method can be thought of as a game, where we hop around extreme
+points until we are at an optimal solution. Once we hit an optimal solution, we
+are done. (We've won!) Otherwise we continue playing. We will address how we can
+tell whether or not we are on an optimal solution later. For now, we discuss how
+to play.
+
+We move from one basic feasible solution to another adjacent one. We need to
+determine a pair of variables to exchange. The \define{entering variable} is the
+new basic variable; the \define{departing variable} is the outgoing variable.
+The fundamental questions we are to answer right now is how we decide which
+variable is which. To determine the entering variable, we apply a simple check:
+the entering variable corresponds to the column with the most negative (i.e.
+negative and largest in absolute value) coefficient in the objective row. The
+departing variable is a bit more complicated and will be more easily seen in an
+example.
+
+Now we continue with our example. Note that the variable $T$ has the most
+negative coefficient; therefore it is our entering variable. By how much can we
+increase $T$? Let's consider $s_1$ and $s_2$ has functions of the other
+variables:
+\begin{align*}
+	s_1 &= 8 - 2J - 2T, \\
+	s_2 &= 15 - 3J - 5T. 
+\end{align*}
+Since we are at $(0,0,8,15)$ and we will have $T$ as the new basic variable, we
+have that $J$ is non-basic. Hence, $J=0$, so we can simplify the above
+equations:
+\begin{align*}
+	s_1 &= 8 - 2T, \\
+	s_2 &= 15 - 5T. 
+\end{align*}
+Because $s_1,s_2\geq 0$, we have two implied inequalities:
+\begin{equation}\label{eqn:theta-ratios}
+	\begin{split}
+		4 &\geq T, \\
+		3 &\geq T. 	
+	\end{split}
+\end{equation}
+Hence, the most restrictive constraint is that $3\geq T$. In other words, if $T$
+were larger than $3$, then $s_2<0$ which is not allowed. However, if $T=3$, then
+$s_2=0$ and, hence, is non-basic. Thus, $s_2$ is the departing variable.
+
+The values $4$ and $3$ in \Cref{eqn:theta-ratios} were obtained from $8/2$ and
+$15/5$, respectively. They are called \define{$\theta$-ratios}. We decide which
+variable should become the departing variable by taking the variable that
+corresponds to the smallest positive $\theta$-ratio. Note that one can see these
+ratios in the initial tableau by looking at the final column ``divided by'' the
+$T$-column. Here is the tableau once again.
+\begin{center}
+	\begin{tabular}{|c|ccccc|c|}
+		\hline
+		& $J$ & $T$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+		$s_1$ & 2 & 2 & 1 & 0 & 0 & 8 \\ \hline
+		$s_2$ & 3 & 5 & 0 & 1 & 0 & 15 \\ \hline 
+		& $-100$ & $-120$ & 0 & 0 & 1 & 0 \\ \hline
 	\end{tabular}
 \end{center}
 
+The column corresponding to the entering variable is called the \define{entering
+column} or the \define{pivotal column}. The row corresponding to the departing
+variable is called the \define{departing row} or the \define{pivotal row}. The
+entry in both the pivotal row and column is called the \define{pivot}. Hence,
+the $5$ is the current pivot.
 
+To form a new table, we update the column of basic variables and apply Gaussian
+elimination. We want that the entry in both the $s_1$ row and column to be $1$
+and likewise for $T$.
+\begin{center}
+	\begin{tabular}{|c|ccccc|c|}
+		\hline
+		& $J$ & $T$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+		$s_1$ & 2 & 2 & 1 & 0 & 0 & 8 \\ \hline
+		$T$ & 3/5 & 1 & 0 & 1/5 & 0 & 3 \\ \hline 
+		& $-100$ & $-120$ & 0 & 0 & 1 & 0 \\ \hline
+	\end{tabular}
+\end{center}
+Now we apply Gaussian elimination to clear the entries above and below the
+pivot to obtain our new tableau:
+\begin{center}
+	\begin{tabular}{|c|ccccc|c|}
+		\hline
+		& $J$ & $T$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+		$s_1$ & 4/5 & 0 & 1 & $-2/5$ & 0 & 2 \\ \hline
+		$T$ & 3/5 & 1 & 0 & 1/5 & 0 & 3 \\ \hline 
+		& $-28$ & $0$ & 0 & 24 & 1 & 360 \\ \hline
+	\end{tabular}
+\end{center}
+Note we have moved from $(0,0,8,15)$ to $(0,3,2,0)$, and in the standard form of
+the same LP, we have moved from $(0,0)$ to $(0,3)$. Because we have negative
+entires in the objective row, we continue playing. 
 
+Our new entering variable is $J$ since it corresponds to the most (and only)
+negative coefficient in the objective row. The corresponding $\theta$-ratios are 
+\begin{align*}
+	s_1 &: \dfrac{2}{4/5} = 5/2, \\
+	T &: \dfrac{3}{3/5} = 5.
+\end{align*}
+Since $s_1$ corresponds to the smallest positive ratio, it is the new departing
+variable. We update our tableau accordingly.
+\begin{center}
+	\begin{tabular}{|c|ccccc|c|}
+		\hline
+		& $J$ & $T$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+		$J$ & 1 & 0 & 5/4 & $-1/2$ & 0 & 5/2 \\ \hline
+		$T$ & 0 & 1 & $-3/4$ & 1/2 & 0 & 3/2 \\ \hline 
+		& $0$ & $0$ & 35 & 10 & 1 & 430 \\ \hline
+	\end{tabular}
+\end{center}
+Since there are no negative entries in the objective row, we are done and are
+therefore at an optimal solution. The extreme point we are on is $(5/2, 3/2, 0,
+0)$, and the corresponding value under the objective function is $430$. To
+address a question previously raised: we know when we are at an optimal solution
+if none of the entries in the objective row are negative.
 
+I purposefully skipped over two potential issues. Notice that with
+$\theta$-ratios, we consider only those that are positive. 
+\begin{enumerate}
+	\item What do we do with the negative $\theta$-ratios? 
+	\item What is we get a divide by zero error? 
+\end{enumerate}
+We'll consider both of these cases separately and with our running
+example---though slightly tweaked to fit these cases.
 
+Suppose we have the following tableau.
+\begin{center}
+	\begin{tabular}{|c|ccccc|c|}
+		\hline
+		& $J$ & $T$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+		$s_1$ & 4/5 & 0 & 1 & $-2/5$ & 0 & 2 \\ \hline
+		$T$ & $-3/5$ & 1 & 0 & 1/5 & 0 & 3 \\ \hline 
+		& $-28$ & $0$ & 0 & 24 & 1 & 360 \\ \hline
+	\end{tabular}
+\end{center}
+Our entering variable is again $J$, and the $\theta$-ratio corresponding to $T$
+is negative. Let's consider what this implies about the system. Treating $T$ as
+a function of the rest, we have 
+\begin{align*}
+	T &= 3 - \dfrac{1}{5}s_2 + \dfrac{3}{5}J = 3 + \dfrac{3}{5}J.
+\end{align*}
+Since $T\geq 0$, the equality together with this inequality imply that 
+\begin{align*}
+	-5 \leq T,
+\end{align*}
+but this is not new information since we are already assuming that $T\geq 0$.
+Hence, it can be ignored. And this is precisely the conclusion when we encounter
+$\theta$-ratios: they do not impose any new constraints on our system and,
+therefore, can be ignored.
 
+Similarly, we assume now that we have the following tableau.
+\begin{center}
+	\begin{tabular}{|c|ccccc|c|}
+		\hline
+		& $J$ & $T$ & $s_1$ & $s_2$ & $z$ & \\ \hline
+		$s_1$ & 4/5 & 0 & 1 & $-2/5$ & 0 & 2 \\ \hline
+		$T$ & $0$ & 1 & 0 & 1/5 & 0 & 3 \\ \hline 
+		& $-28$ & $0$ & 0 & 24 & 1 & 360 \\ \hline
+	\end{tabular}
+\end{center}
+We cannot form the $\theta$-ratio for $T$ since that would involve dividing by
+$0$. Retreating to the equation of $T$ in terms of the rest yields 
+\begin{align*}
+	T &= 3 - \dfrac{1}{5}s_2  = 3 .
+\end{align*}
+This again is not new information and can be deduced from the tableau. Hence,
+this (lack of a) $\theta$-ratio can be ignored.
 
+We arrive at two conclusions concerning $\theta$-ratios:
+\begin{description}
+	\item[Conclusion 1:] Only the positive $\theta$-ratios impose new
+	constraints. All other can be ignored.
+	\item[Conclusion 2:] If in the pivotal column all entries above the
+	objective row are non-positive, then the corresponding LP has no (finite)
+	optimal solution.
+\end{description}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\WEEK{5}
 
 
 
