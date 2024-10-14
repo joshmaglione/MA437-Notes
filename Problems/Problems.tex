@@ -150,6 +150,11 @@
 
 \maketitle
 
+These problems are taken essentially directly from our main text: Bernard Kolman
+and Robert E. Beck's textbook titled \emph{Elementary linear programming with
+applications}.
+
+
 \section*{Problem 1}
 
 Show that the following hold.
@@ -240,9 +245,55 @@ Use one iteration of the Simplex Algorithm to obtain the next tableau from the f
     \begin{tabular}{|c|ccccc|c|}
         \hline 
         & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & \\ \hline
-        $x_3$ & $2/3$ & 
+        $x_3$ & $2/3$ & $0$ & $1$ & $3/5$ & $0$ & $3/2$ \\ 
+        $x_2$ & $3/2$ & $1$ & $0$ & $1$ & $0$ & $5/2$ \\ 
+        $x_5$ & $5$ & $0$ & $0$ & $2/9$ & $1$ & $2/3$ \\ \hline
+        & $4$ & $0$ & $0$ & $-5$ & $0$ & $7/3$ \\ \hline
     \end{tabular}
 \end{center}
 
+\section*{Problem 6}
+
+Consider the system of equations $Ax=b$ where
+\begin{align*}
+    A &= \begin{bmatrix}
+        2 & 3 & 1 & 0 & 0 \\ 
+        -1 & 1 & 0 & 2 & 1 \\
+        0 & 6 & 1 & 0 & 3
+    \end{bmatrix}, & b &= \begin{bmatrix}
+        1 \\ 1 \\ 4
+    \end{bmatrix}.
+\end{align*}
+Determine (with justification) whether each of the following points is a basic solution to the system:
+\begin{align*}
+    & \begin{bmatrix}
+        1 \\ 0 \\ -1 \\ 1 \\ 0 
+    \end{bmatrix}, & & \begin{bmatrix}
+        0 \\ 2 \\ -5 \\ 0 \\ -1 
+    \end{bmatrix}, & & \begin{bmatrix}
+        0 \\ 0 \\ 1 \\ 0 \\ 1
+    \end{bmatrix}.
+\end{align*}
+
+\section*{Problem 7}
+
+Consider the following tableau that arose from solving an LP by the simplex method.
+\begin{center}
+    \begin{tabular}{|cccccc|c|}
+        \hline 
+        $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $s_3$ & \\ \hline
+        $1$ & $5$ & $2$ & $0$ & $0$ & $3$ & $20$ \\
+        $0$ & $2$ & $4$ & $1$ & $0$ & $-4$ & $6$ \\
+        $0$ & $2$ & $-1$ & $0$ & $1$ & $3$ & $12$ \\ \hline 
+        $0$ & $-5$ & $-3$ & $0$ & $0$ & $3$ & $12$ \\ \hline
+    \end{tabular}
+\end{center}
+\begin{enumerate}[label=$(\roman*)$]
+    \item identify the basic feasible solution and basic variables in this
+    tableau.
+    \item Compute the next tableau using the simplex method.
+    \item identify the basic feasible solution and basic variables in the new
+    tableau from $(ii)$.
+\end{enumerate}
 
 \end{document}
