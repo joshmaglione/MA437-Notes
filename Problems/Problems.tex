@@ -213,6 +213,36 @@ Determine the departing variable if the entering variable is
 
 \section*{Problem 4}
 
+Suppose $A\in \mathrm{Mat}_{m\times n}(\mathbb{R})$, $b\in \mathbb{R}^m$, and
+$c\in \mathbb{R}^n$. Consider the following LP.
+
+\begin{myboxex}[0.75]
+    Maximize 
+    \begin{align*}
+        z &= c^{\top}x
+    \end{align*}
+    subject to $x\geq 0$ and 
+    \begin{align*}
+        Ax &\leq b. 
+    \end{align*}
+\end{myboxex}
+
+Show that if $u$ and $v$ are feasible solutions, then the following point is a
+feasible solution:
+\[ 
+    w = \dfrac{1}{3} u + \dfrac{2}{3} v.
+\]
+
+\section*{Problem 5}
+
+Use one iteration of the Simplex Algorithm to obtain the next tableau from the following.
+\begin{center}
+    \begin{tabular}{|c|ccccc|c|}
+        \hline 
+        & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & \\ \hline
+        $x_3$ & $2/3$ & 
+    \end{tabular}
+\end{center}
 
 
 \end{document}
