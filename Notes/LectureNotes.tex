@@ -398,7 +398,7 @@ interchangeably---as long as we correctly compensate!
 A key feature of LPs is that the objective function as well as each of the
 constraint (in-)equalities are \emph{linear} in the $x_1,x_2,\dots, x_n$.
 
-\subsection{Standard form}
+\subsection{Standard form}\label{sec:standard-form}
 
 Can we play around with the constants $a_{ij}$ and $b_k$ to get all of the
 (in-)equalities into the same ``shape''? For example, 
@@ -1585,6 +1585,8 @@ determined by the basic variables in the first column. For example, the current
 extreme point is $(0,0,8,15)$, and evaluating this at $2J+2T+s_1$, at
 $3J+5T+s_2$, and $-100J - 120T + z$ yields $8$, $15$, and $0$, respectively.
 
+\subsection{Basic Simplex Method}\label{sec:simplex-method}
+
 The Simplex Method can be thought of as a game, where we hop around extreme
 points until we are at an optimal solution. Once we hit an optimal solution, we
 are done. (We've won!) Otherwise we continue playing. We will address how we can
@@ -1819,6 +1821,204 @@ We arrive at two conclusions concerning $\theta$-ratios:
 	37/4,0,0)$, and hence, the optimal solution to the original LP is $(0,5/4,
 	37/4)$.
 \end{ex}
+
+\subsection{Artificial variables}
+
+Two problems could arise that would prevent us from using what we discussed.
+Suppose we have an LP in canonical form with constraint matrix $A\in
+\mathrm{Mat}_{m\times s}(\mathbb{R})$ and $b\in\mathbb{R}^m$. 
+\begin{enumerate}
+	\item What if $b\not\geq 0$?
+	\item What if the last $m$ columns of $A$ are not an identity matrix?
+\end{enumerate}
+In both cases, we do not get an initial basic feasible solution by
+$(0,b)\in\mathbb{R}^{m+s}$. 
+
+We modify the Simplex Method from \Cref{sec:simplex-method} to have two phases,
+called the Two-Phase Method. We must augment our LP to account for these
+problems. 
+
+We saw in \Cref{sec:standard-form} that we can put all LPs into standard form,
+but now we want to make sure that we do so in such a way that the $b$ vector is
+non-negative. Suppose we have the following \emph{general} LP.
+
+\begin{myboxex}[0.8]
+	Maximize
+	\begin{align*}
+		z &= c^{\top} x 
+	\end{align*}
+	subject to $x\geq 0$ and 
+	\begin{align*}
+		A_1x &\geq b_1, & A_2x & \leq b_2, & A_3x &= b_3,
+	\end{align*}
+	where $A_i \in\mathrm{Mat}_{r_i\times n}(\mathbb{R})$ and $r_1+r_2+r_3=m$
+	and $b_i\geq 0$.
+\end{myboxex}
+
+Normally, we would negate and add slack; however instead of negating, we will
+just include the slack. We add $r_2$ ``positive'' slack variables and $r_1$
+``negative'' slack variables. Thus we have, for $t = (t_1,\dots, t_{r_1})$ and
+$s=(s_1,\dots, s_{r_2})$,
+\begin{align*}
+	A_1x - I_{r_1}t &=b_1, & A_2x + I_{r_2}s &= b_2, & A_3x &= b_3.
+\end{align*}
+
+\begin{ex}\label{ex:b-non-neg}
+	Rewrite the LP so that it is in canonical form and the $b$-vector is non-negative:
+	
+	\begin{myboxex}[0.75]
+		Maximize 
+		\begin{align*}
+			z &= 2x_1 + 5x_2 
+		\end{align*}
+		subject to $x\geq 0$ and 
+		\begin{align*}
+			2x_1 + 3x_2 &\leq 6, \\
+			-2x_1 + x_2 &\leq -2, \\
+			x_1 - 6 x_2 &= -2.
+		\end{align*}
+	\end{myboxex}
+
+	\noindent We can rewrite it as follows.
+
+	\begin{myboxex}[0.75]
+		Maximize 
+		\begin{align*}
+			z &= 2x_1 + 5x_2 
+		\end{align*}
+		subject to $x\geq 0$ and 
+		\begin{align*}
+			2x_1 + 3x_2 + x_3 &= 6, \\
+			2x_1 - x_2 - x_4 &= 2, \\
+			-x_1 + 6 x_2 &= 2.
+		\end{align*}
+	\end{myboxex}
+\end{ex}
+
+Although the $b$-vector is non-negative in \Cref{ex:b-non-neg}, we still do not
+have an initial basic feasible solution. Now we must take an arbitrary LP in
+canonical form, without the condition that the last $m$ columns are an identity
+matrix, and add \define{artificial variables}. We simply add a new variable to
+each constraint equation---we could be more conservative with these artificial
+variables, but we don't care. We can rewrite the LP from \Cref{ex:b-non-neg} as
+follows:
+
+\begin{myboxex}[0.75]
+	Maximize 
+	\begin{align*}
+		z &= 2x_1 + 5x_2 
+	\end{align*}
+	subject to $x,y\geq 0$ and 
+	\begin{align*}
+		2x_1 + 3x_2 + x_3 + y_1 &= 6, \\
+		2x_1 - x_2 - x_4 + y_2 &= 2, \\
+		-x_1 + 6 x_2 + y_3 &= 2.
+	\end{align*}
+\end{myboxex}
+
+Clearly $x=0$ and $y=b$ yields an initial basic feasible solution now. However,
+we want $y=0$, so we apply a two-phase approach, which we describe next.
+
+\subsection{Two-Phase Method}
+
+Suppose we have an LP in canonical form with a non-negative $b$-vector and each
+constraint equation has an artificial variable. We will apply the Simplex Method
+to a different LP in order to produce a basic feasible solution to the original
+problem (without artificial variables). This is called Phase 1. The second phase
+begins when we have a basic feasible solution to the original problem; then we
+can apply the Simplex Method as before. This is Phase 2.
+
+Suppose the following is our LP in canonical form with artificial variables $y$:
+
+\begin{myboxex}[0.75]
+	Maximize
+	\begin{align*}
+		z &= c^{\top}x
+	\end{align*}
+	subject to $x,y\geq 0$
+	\begin{align*}
+		Ax + Iy &= b.
+	\end{align*}
+\end{myboxex}
+
+We want $y=0$, so in order to ensure this, we want to minimize 
+\begin{align*}
+	z' &= y_1 + y_2 + \cdots + y_m.
+\end{align*}
+Since $y\geq 0$, $z'=0$ implies that $y_1=\cdots = y_m=0$. But instead of
+minimizing an objective function, we can maximize its negative. Hence, we want
+to maximize 
+\begin{align*}
+	z &= -y_1- y_2 - \cdots - y_m.
+\end{align*}
+To make the artificial variables like slack variables from before, we need them
+out of the objective function. Since each artificial variable occurs in exactly
+one constraint equation, we can solve for the artificial variables. Instead of
+writing out the formulas, we illustrate by example.
+
+\begin{ex}
+	Use artificial variables to convert this LP in canonical form to a canonical
+	form with artificial variables to use with the 2-Phase Method.
+
+	\begin{myboxex}[0.75]
+		Maximize 
+		\begin{align*}
+			z &= 2x_1 + 5x_2 
+		\end{align*}
+		subject to $x\geq 0$ and 
+		\begin{align*}
+			2x_1 + 3x_2 + x_3 &= 6, \\
+			2x_1 - x_2 - x_4 &= 2, \\
+			-x_1 + 6 x_2 &= 2.
+		\end{align*}
+	\end{myboxex}
+
+	We define artificial variables $y_1,y_2,y_3$ and define our constraints to
+	be 
+	\begin{align*}
+		2x_1 + 3x_2 + x_3 + y_1 &= 6, \\
+		2x_1 - x_2 - x_4 + y_2 &= 2, \\
+		-x_1 + 6 x_2 + y_3 &= 2.
+	\end{align*}
+	Now we want to maximize 
+	\begin{align*}
+		z &= -y_1 - y_2 - y_3.
+	\end{align*}
+	Using the constraint equations, we can remove the $y_i$ from the objective
+	function:
+	\begin{align*}
+		z &= -y_1 - y_2 - y_3 \\
+		&= -(6-2x_1-3x_2-x_3) - (2-2x_1+x_2 +x_4) - (2+x_1-6x_2) \\ 
+		&= 3x_1 + 8 x_2 + x_3 - x_4 - 10.
+	\end{align*}
+	Thus, the LP we want is 
+
+	\begin{myboxex}[0.75]
+		Maximize 
+		\begin{align*}
+			z &= 3x_1 + 8 x_2 + x_3 - x_4 - 10
+		\end{align*}
+		subject to $x,y\geq 0$ and 
+		\begin{align*}
+			2x_1 + 3x_2 + x_3 + y_1 &= 6, \\
+			2x_1 - x_2 - x_4 + y_2 &= 2, \\
+			-x_1 + 6 x_2 + y_3 &= 2.
+		\end{align*}
+	\end{myboxex}
+\end{ex}
+
+We can simply apply the Simplex Method to the LP we get after this process. This
+is Phase 1, and there are two possible outcomes that mark the end of it:
+\begin{enumerate}
+	\item all artificial variables are non-basic variables,
+	\item it is not possible to get all artificial variables non-basic.
+\end{enumerate}
+We will discuss only the first case right now.
+
+
+
+
+
 
 
 
