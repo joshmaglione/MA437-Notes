@@ -142,16 +142,76 @@
 
 \allowdisplaybreaks
 
-\title{The Mathematics of Decision Making I: Additional Problems}
+\title{Additional Problems}
 \author{Joshua Maglione}
 \date{\today}
 
 \begin{document}
 
 \maketitle
-\tableofcontents
 
+\section*{Problem 1}
 
+Show that the following hold.
+\begin{enumerate}[label=$(\roman* )$]
+    \item A hyperplane in $\mathbb{R}^n$ is a convex set.
+    \item A close half-space in $\mathbb{R}^n$ is a convex set.
+    \item An intersection of a finite collection of convex sets in
+    $\mathbb{R}^n$ is convex.
+    \item Suppose $f : \mathbb{R}^a \to \mathbb{R}^b$ is a linear
+    transformation. If $S\subseteq \mathbb{R}^a$ is a convex set, show that the
+    following set is convex:
+    \[
+        \left\{ f(v) ~\middle|~ v\in S \right\} \subseteq \mathbb{R}^b.
+    \]
+\end{enumerate}
+
+\section*{Problem 2}
+
+Consider the following LP
+
+\begin{myboxex}[0.75]
+    Maximize 
+    \begin{align*}
+        z &= 3x + 2y 
+    \end{align*}
+    subject to $x,y\geq 0$ and 
+    \begin{align*}
+        2x - y &\leq 6, \\
+        2x + y &\leq 10.
+    \end{align*}
+\end{myboxex}
+\begin{enumerate}[label=$(\roman* )$]
+    \item Transform this problem to a problem n canonical form.
+    \item For each extreme point of the new problem, identify the basic
+    variables.
+    \item Solve the given LP.
+\end{enumerate}
+
+\section*{Problem 3}
+
+Consider the following simplex tableau that is missing its objective row and
+column.
+
+\begin{center}
+    \begin{tabular}{|c|ccccccc|c|}
+        \hline
+        & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $x_7$ & \\ \hline
+        $x_4$ & $0$ & $0$ & $2$ & $1$ & $5/2$ & $0$ & $0$ & $6/7$ \\ 
+        $x_1$ & $1$ & $0$ & $5$ & $0$ & $-3$ & $0$ & $-2$ & $2/7$ \\ 
+        $x_6$ & $0$ & $0$ & $3$ & $0$ & $4$ & $1$ & $-4$ & $5/7$ \\ 
+        $x_2$ & $0$ & $1$ & $0$ & $0$ & $3/2$ & $0$ & $0$ & $1/7$ \\ \hline
+    \end{tabular}
+\end{center}
+
+Determine the departing variable if the entering variable is
+\begin{enumerate}[label=$(\roman*)$]
+    \item $x_5$;
+    \item $x_3$;
+    \item $x_7$.
+\end{enumerate}
+
+\section*{Problem 4}
 
 
 
