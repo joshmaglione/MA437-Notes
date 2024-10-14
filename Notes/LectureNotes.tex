@@ -2015,8 +2015,21 @@ is Phase 1, and there are two possible outcomes that mark the end of it:
 \end{enumerate}
 We will discuss only the first case right now.
 
+The final tableau from Phase 1 will be the initial tableau in Phase 2 with the
+following modifications.
+\begin{enumerate}
+	\item Delete all columns labeled with artificial variables.
+	\item Calculate a new objective row as follows. Start with the original
+	objective function (not the one we got after modifying). Use the basic
+	variables to clear their corresponding entries in the objective row.
+\end{enumerate}
+Phase 2 then continues by applying the Simplex Method.
 
-
+To summarize before looking at examples, in less than ideal cases, we add
+artificial variables and use the Simplex Method on an appropriate (but
+different) LP. This will hopefully yield a basic feasible solution of our
+original problem, which we can then feed into the Simplex Method again from
+before to find an optimal solution.
 
 
 
