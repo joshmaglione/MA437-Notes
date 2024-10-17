@@ -1,0 +1,437 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	urlcolor=blue,
+	citecolor=blue,
+}
+\usepackage[margin=3cm]{geometry}
+\usepackage{mathpazo}
+\usepackage{url}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{mathrsfs}
+\usepackage{afterpage}
+\usepackage[svgnames]{xcolor}
+\usepackage{marvosym}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{pgfplots}
+\usetikzlibrary{3d}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{con*}{Conjecture}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{ex}[thm]{Example}
+\newtheorem{quest}[thm]{Question}
+\newtheorem{obs}[thm]{Observation}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{exercise}{Exercise}
+
+\newenvironment{mybox}[1][]{%
+\ifstrempty{#1}%
+% if condition (without title)
+{\mdfsetup{%
+    frametitle={%
+        %\tikz[baseline=(current bounding box.east),outer sep=0pt]
+        %\node[anchor=east,rectangle,fill=RoyalBlue!80] {};
+		}
+    }%
+% else condition (with title)
+}{\mdfsetup{%
+    frametitle={%
+        \tikz[baseline=(current bounding box.east),outer sep=0pt]
+        \node[anchor=east,rectangle,fill=RoyalBlue!80,text=white]
+        {\strut #1};}%
+    }%
+}%
+% Both conditions
+\mdfsetup{%
+    innertopmargin=10pt,linecolor=RoyalBlue!80,%
+    linewidth=2pt,topline=true,%
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax%
+}
+\begin{mdframed}[]\relax}{%
+\end{mdframed}}
+
+\newenvironment{myboxgreen}[1][]{%
+\ifstrempty{#1}%
+% if condition (without title)
+{\mdfsetup{%
+    frametitle={%
+        %\tikz[baseline=(current bounding box.east),outer sep=0pt]
+        %\node[anchor=east,rectangle,fill=RoyalBlue!80] {};
+		}
+    }%
+% else condition (with title)
+}{\mdfsetup{%
+    frametitle={%
+        \tikz[baseline=(current bounding box.east),outer sep=0pt]
+        \node[anchor=east,rectangle,fill=ForestGreen!80,text=white]
+        {\strut #1};}%
+    }%
+}%
+% Both conditions
+\mdfsetup{%
+    innertopmargin=10pt,linecolor=ForestGreen!80,%
+    linewidth=2pt,topline=true,%
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax%
+}
+\begin{mdframed}[]\relax}{%
+\end{mdframed}}
+
+\newenvironment{myboxex}[1][1]{%
+\vspace{0.25em}
+\noindent \begin{minipage}{0.99\textwidth}
+	\centering
+	\begin{minipage}{#1\textwidth}
+		\begin{myboxgreen}[]{}
+}{%
+		\end{myboxgreen}
+	\end{minipage}
+\end{minipage}
+\vspace{0.25em}
+}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\define}[1]{\textbf{\textit{#1}}}
+\newcommand{\WEEK}[1]{%
+\hfill Week #1
+
+\vspace{-1em}
+
+\begin{center}
+	\rule{\textwidth}{2pt}
+\end{center}
+\vspace{0.5em}%
+}
+
+\setcounter{tocdepth}{2}
+
+\allowdisplaybreaks
+
+\title{Additional Problems}
+\author{Joshua Maglione}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Solution 1}
+
+\begin{enumerate}[label=$(\roman* )$]
+    \item Let $a\in \mathbb{R}^n$ and $b\in \R$, so that 
+    \[ 
+        H = \{ v\in \mathbb{R}^n \mid a^{\top}v = b\} 
+    \]
+    define a hyperplane in $\mathbb{R}^n$. Let $u,v\in H$. Then for all $t\in [0,1]$, 
+    \begin{align*}
+        a^{\top}(t v + (1 - t) u) &= t a^{\top}v + (1 - t) a^{\top} u \\
+        &= tb + (1-t)b = b.
+    \end{align*}
+    Hence, $tv+(1-t)u\in H$, and therefore the whole line segment between $u$
+    and $v$ is in $H$. \qed 
+    \item Apply the same argument as $(i)$ except some equalities will be weak
+    inequalities. \qed
+    \item We'll prove it for infinitely many. Let $I$ be an indexing set and
+    suppose $S_i\subseteq \mathbb{R}^n$ is convex for all $i\in I$. Set $S =
+    \bigcap_{i\in I}S_i \subseteq \mathbb{R}^n$. Let $u,v\in S$. Then $u,v\in
+    S_i$ for all $i\in I$. Since $S_i$ is convex, the line segment connecting
+    $u$ and $v$ is in $S_i$. Since this holds for all $i\in I$, the line segment
+    connecting $u$ and $v$ is in $S$. Hence, $S$ is convex. \qed
+    \item Write 
+    \[
+        f(S) = \left\{ f(v) ~\middle|~ v\in S \right\} \subseteq \mathbb{R}^b.
+    \]
+    Let $u,v\in f(S)$. Then there exist $x,y\in S$ such that $u=f(x)$ and
+    $v=f(y)$. Since $S$ is convex, we have that $ty + (1-t)x\in S$ for all $t\in
+    [0,1]$. Thus, $f(ty + (1-t)x)\in f(S)$. Since $f$ is a linear
+    transformation, 
+    \[ 
+        f(ty + (1-t)x) = tf(y) + (1-t)f(x) =tv + (1-t)u
+    \]
+    is contained in $f(S)$. Hence, $f(S)$ is convex.\qed
+\end{enumerate}
+
+\section*{Solution 2}
+
+\begin{enumerate}[label=$(\roman* )$]
+    \item The LP in CF is
+    
+    \begin{myboxex}[0.75]
+        Maximize 
+        \begin{align*}
+            z &= 3x + 2y 
+        \end{align*}
+        subject to $x,y,s_1,s_2\geq 0$ and 
+        \begin{align*}
+            2x - y + s_1 &= 6, \\
+            2x + y + s_2 &= 10.
+        \end{align*}
+    \end{myboxex}
+
+    \item From a theorem from class, the extreme points are the basic feasible
+    solutions. From another theorem, the basic solutions are obtained by taking
+    all pairs of columns of 
+    \[
+        A = \begin{bmatrix}
+            2 & -1 & 1 & 0 \\ 2 & 1 & 0 & 1
+        \end{bmatrix}
+    \]
+    that form a basis. Every $2$-element subset yields a basis, so we have:
+    \begin{align*}
+        & \begin{bmatrix}
+            4 \\ 2 \\ 0 \\ 0
+        \end{bmatrix}, & & \begin{bmatrix}
+            5 \\ 0 \\ -4 \\ 0
+        \end{bmatrix}, & & \begin{bmatrix}
+            3 \\ 0 \\ 0 \\ 4
+        \end{bmatrix}, & & \begin{bmatrix}
+            0 \\ 10 \\ 16 \\ 0
+        \end{bmatrix}, & & \begin{bmatrix}
+            0 \\ -6 \\ 0 \\ 16
+        \end{bmatrix}, & & \begin{bmatrix}
+            0 \\ 0 \\ 6 \\ 10
+        \end{bmatrix}.
+    \end{align*}
+    We have exactly four of these points that are feasible:
+    \begin{align*}
+        & \begin{bmatrix}
+            4 \\ 2 \\ 0 \\ 0
+        \end{bmatrix}, & & \begin{bmatrix}
+            3 \\ 0 \\ 0 \\ 4
+        \end{bmatrix}, & & \begin{bmatrix}
+            0 \\ 10 \\ 16 \\ 0
+        \end{bmatrix}, & & \begin{bmatrix}
+            0 \\ 0 \\ 6 \\ 10
+        \end{bmatrix}.
+    \end{align*}
+    \item The optimal point occurs at $(0,10)^{\top}$.
+\end{enumerate}
+
+\section*{Solution 3}
+
+\begin{center}
+    \begin{tabular}{|c|ccccccc|c|}
+        \hline
+        & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $x_7$ & \\ \hline
+        $x_4$ & $0$ & $0$ & $2$ & $1$ & $5/2$ & $0$ & $0$ & $6/7$ \\ 
+        $x_1$ & $1$ & $0$ & $5$ & $0$ & $-3$ & $0$ & $-2$ & $2/7$ \\ 
+        $x_6$ & $0$ & $0$ & $3$ & $0$ & $4$ & $1$ & $-4$ & $5/7$ \\ 
+        $x_2$ & $0$ & $1$ & $0$ & $0$ & $3/2$ & $0$ & $0$ & $1/7$ \\ \hline
+    \end{tabular}
+\end{center}
+
+\begin{enumerate}[label=$(\roman*)$]
+    \item If $x_5$ is the entering variable, then $\theta$-ratios are $12/35$,
+    $-2/21$, $5/28$, and $2/21$ for $x_4$, $x_1$, $x_6$, and $x_2$ respectively.
+    Therefore, $x_6$ is the departing variable.
+    \item If $x_3$ is the entering variable, then $\theta$-ratios are $3/7$,
+    $2/35$, $5/21$, and DNE for $x_4$, $x_1$, $x_6$, and $x_2$ respectively.
+    Therefore, $x_1$ is the departing variable.
+    \item If $x_7$ is the entering variable, then there is no departing variable
+    since the pivotal column is non-positive.
+\end{enumerate}
+
+\section*{Solution 4}
+
+Suppose $A\in \mathrm{Mat}_{m\times n}(\mathbb{R})$, $b\in \mathbb{R}^m$, and
+$c\in \mathbb{R}^n$. Consider the following LP.
+
+\begin{myboxex}[0.75]
+    Maximize 
+    \begin{align*}
+        z &= c^{\top}x
+    \end{align*}
+    subject to $x\geq 0$ and 
+    \begin{align*}
+        Ax &\leq b. 
+    \end{align*}
+\end{myboxex}
+
+The point 
+\[ 
+    w = \dfrac{1}{3} u + \dfrac{2}{3} v
+\]
+is on the line segment between $u$ and $v$, namely, $w = L_{u,v}(2/3)$. We know
+that a finite intersection of closed half-spaces is convex, and we know that the
+set of feasible solutions is a finite intersection of close half-spaces.
+Therefore, $w$ is a feasible solution. \qed 
+
+\section*{Solution 5}
+
+Original:
+\begin{center}
+    \begin{tabular}{|c|ccccc|c|}
+        \hline 
+        & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & \\ \hline
+        $x_3$ & $2/3$ & $0$ & $1$ & $3/5$ & $0$ & $3/2$ \\ 
+        $x_2$ & $3/2$ & $1$ & $0$ & $1$ & $0$ & $5/2$ \\ 
+        $x_5$ & $5$ & $0$ & $0$ & $2/9$ & $1$ & $2/3$ \\ \hline
+        & $4$ & $0$ & $0$ & $-5$ & $0$ & $7/3$ \\ \hline
+    \end{tabular}
+\end{center}
+
+\noindent Next:
+\begin{center}
+    \begin{tabular}{|c|ccccc|c|}
+        \hline 
+        & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & \\ \hline
+        $x_3$ & $-7/30$ & $-3/5$ & $1$ & $0$ & $0$ & $0$ \\ 
+        $x_4$ & $3/2$ & $1$ & $0$ & $1$ & $0$ & $5/2$ \\ 
+        $x_5$ & $14/3$ & $-2/9$ & $0$ & $0$ & $1$ & $1/9$ \\ \hline
+        & $23/2$ & $5$ & $0$ & $0$ & $0$ & $89/6$ \\ \hline
+    \end{tabular}
+\end{center}
+
+
+\section*{Solution 6}
+
+Let
+\begin{align*}
+    A &= \begin{bmatrix}
+        2 & 3 & 1 & 0 & 0 \\ 
+        -1 & 1 & 0 & 2 & 1 \\
+        0 & 6 & 1 & 0 & 3
+    \end{bmatrix}, & b &= \begin{bmatrix}
+        1 \\ 1 \\ 4
+    \end{bmatrix}.
+\end{align*}
+And set 
+\begin{align*}
+    x &= \begin{bmatrix}
+        1 \\ 0 \\ -1 \\ 1 \\ 0 
+    \end{bmatrix}, & y &= \begin{bmatrix}
+        0 \\ 2 \\ -5 \\ 0 \\ -1 
+    \end{bmatrix}, & z &= \begin{bmatrix}
+        0 \\ 0 \\ 1 \\ 0 \\ 1
+    \end{bmatrix}.
+\end{align*}
+Since only 2 entries of $z$ are nonzero, $z$ is not basic. Since 
+\[ 
+    Ax = \begin{bmatrix}
+        1 \\ 1 \\ -1
+    \end{bmatrix},
+\]
+the vector $x$ cannot be basic. Since $Ay=b$, it follows that $y$ is a basic
+solution. \qed
+
+\section*{Solution 7}
+
+\begin{center}
+    \begin{tabular}{|cccccc|c|}
+        \hline 
+        $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $s_3$ & \\ \hline
+        $1$ & $5$ & $2$ & $0$ & $0$ & $3$ & $20$ \\
+        $0$ & $2$ & $4$ & $1$ & $0$ & $-4$ & $6$ \\
+        $0$ & $2$ & $-1$ & $0$ & $1$ & $3$ & $12$ \\ \hline 
+        $0$ & $-5$ & $-3$ & $0$ & $0$ & $3$ & $12$ \\ \hline
+    \end{tabular}
+\end{center}
+\begin{enumerate}[label=$(\roman*)$]
+    \item The basic variables are given by where the pivots are located: $x_1$,
+    $s_1$, and $s_2$. Therefore, the corresponding basic feasible solution is
+    $(20, 0, 0, 6, 12,0)^{\top}$.
+    \item The next table is
+    \begin{center}
+        \begin{tabular}{|c|cccccc|c|}
+            \hline 
+            & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $s_3$ & \\ \hline
+            $x_1$ & $1$ & $0$ & $-8$ & $-5/2$ & $0$ & $13$ & $5$ \\
+            $x_2$ & $0$ & $1$ & $2$ & $1/2$ & $0$ & $-2$ & $3$ \\
+            $s_2$ & $0$ & $0$ & $-5$ & $-1$ & $1$ & $7$ & $6$ \\ \hline 
+            & $0$ & $0$ & $7$ & $5/2$ & $0$ & $-7$ & $27$ \\ \hline
+        \end{tabular}
+    \end{center}
+    \item The corresponding basic feasible solution is $(5, 3, 0, 0, 6,
+    0)^{\top}$ with basic variables $x_1$, $x_2$, and $s_2$.
+\end{enumerate}
+
+\section*{Solution 8}
+
+\begin{myboxex}[0.75]
+    Maximize 
+    \begin{align*}
+        z &= x_1 + 2x_2 + x_3
+    \end{align*}
+    subject to $x\geq 0$ and 
+    \begin{align*}
+        3x_1 + x_2 - x_3 &= 15, \\
+        8x_1 + 4x_2 - x_3 &= 50, \\
+        2x_1 + 2x_2 + x_3 &= 20.
+    \end{align*}
+\end{myboxex}
+
+We need to add in three artificial variables. For the first phase, we need to solve 
+
+\begin{myboxex}[0.75]
+    Maximize 
+    \begin{align*}
+        z &= -85 - 13x_1 - 7x_2 + x_3 
+    \end{align*}
+    subject to $x\geq 0$, $y\geq 0$, and 
+    \begin{align*}
+        3x_1 + x_2 - x_3 + y_1 &= 15, \\
+        8x_1 + 4x_2 - x_3 + y_2 &= 50, \\
+        2x_1 + 2x_2 + x_3 + y_3 &= 20.
+    \end{align*}
+\end{myboxex}
+
+\noindent The corresponding tableau is 
+\begin{center}
+    \begin{tabular}{|c|cccccc|c|}
+        \hline 
+        & $x_1$ & $x_2$ & $x_3$ & $y_1$ & $y_2$ & $y_3$ & \\ \hline
+        $y_1$ & $3$ & $1$ & $-1$ & $1$ & $0$ & $0$ & $15$ \\
+        $y_2$ & $8$ & $4$ & $-1$ & $0$ & $1$ & $0$ & $50$ \\
+        $y_3$ & $2$ & $2$ & $1$ & $0$ & $0$ & $1$ & $20$ \\ \hline 
+        & $13$ & $7$ & $-1$ & $0$ & $0$ & $0$ & $-85$ \\ \hline
+    \end{tabular}
+\end{center}
+The next tableau is 
+\begin{center}
+    \begin{tabular}{|c|cccccc|c|}
+        \hline 
+        & $x_1$ & $x_2$ & $x_3$ & $y_1$ & $y_2$ & $y_3$ & \\ \hline
+        $y_1$ & $5$ & $3$ & $0$ & $1$ & $0$ & $1$ & $35$ \\
+        $y_2$ & $10$ & $6$ & $0$ & $0$ & $1$ & $1$ & $70$ \\
+        $x_3$ & $2$ & $2$ & $1$ & $0$ & $0$ & $1$ & $20$ \\ \hline 
+        & $15$ & $9$ & $0$ & $0$ & $0$ & $0$ & $-85$ \\ \hline
+    \end{tabular}
+\end{center}
+Therefore, there is no feasible solution.
+
+\end{document}
